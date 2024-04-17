@@ -1,0 +1,18 @@
+.btn-start-learning {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 16px 32px;
+    border-radius: 12px;
+  }
+  
+  .btn-start-learning:hover {
+    background-color: #45a049;
+  }
+  
