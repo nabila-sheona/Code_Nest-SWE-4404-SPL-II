@@ -1,33 +1,66 @@
-import Course from "../models/course.model.js";
+import Course from '../models/course.model.js';
 
 // controllers/course.controller.js
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+
 
 const prisma = new PrismaClient();
 
 export const getUserLevel = async (req, res, next) => {
   try {
-    const { username, courseName } = req.params; // Correctly extract params from request
-    console.log("Username:", username, "CourseName:", courseName);
-    const course = await prisma.courses.findFirst({
-      where: { username, courseName }, // Ensure these are the correct field names in your database schema
-    });
-    if (!course) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Course or user not found" });
-    }
-    res.status(200).json(course.level); // Assuming 'level' is a field in the returned course object
+      const { username, courseName } = req.params; // Correctly extract params from request
+      console.log('Username:', username, 'CourseName:', courseName);
+      const course = await prisma.courses.findFirst({
+          where: { username, courseName } // Ensure these are the correct field names in your database schema
+      });
+      if (!course) {
+          return res.status(404).json({ success: false, message: 'Course or user not found' });
+      }
+      res.status(200).json(course.level); // Assuming 'level' is a field in the returned course object
   } catch (error) {
-    console.error("Error in getUserLevel:", error);
-    res.status(500).json({ message: "Internal server error" });
+      console.error('Error in getUserLevel:', error);
+      res.status(500).json({ message: 'Internal server error' });
   }
 };
 
+export const unlockNextLevel = async (req, res, next) => {
+  const { username, courseName, courseTopic } = req.body;
+
+  try {
+    const course = await prisma.courses.findFirst({
+      where: { username, courseName }
+    });
+
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course or user not found' });
+    }
+
+    if (course.level < 1 && courseTopic === 'helloworld') {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 1 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 1' });
+    } else if (courseTopic === 'variables' && course.level < 2) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 2 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 2' });
+    }
+
+    res.status(200).json({ success: false, message: 'No update needed' });
+  } catch (error) {
+    console.error('Error in unlockNextLevel:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 export const checkRegistration = async (req, res, next) => {
   const { username } = req.params;
-  const courseName = "C Programming"; // This can be dynamic if you have multiple courses
+  const courseName = 'C Programming'; // This can be dynamic if you have multiple courses
 
   try {
     const { courseName, username, level, hasStarted } = req.body;
@@ -54,15 +87,13 @@ export const registerCourse = async (req, res, next) => {
     const existingCourse = await Course.findOne({ courseName, username });
     if (existingCourse) {
       // If the registration exists, send a message and don't create a new one
-      return res
-        .status(409)
-        .json({ message: "User is already registered for this course." });
+      return res.status(409).json({ message: 'User is already registered for this course.' });
     }
 
     // If no existing registration, create a new one
     const newCourse = new Course({ courseName, username, level, hasStarted });
     await newCourse.save();
-    res.status(201).json({ message: "Course registered successfully!" });
+    res.status(201).json({ message: 'Course registered successfully!' });
   } catch (error) {
     next(error);
   }

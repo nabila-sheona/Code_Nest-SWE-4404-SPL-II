@@ -7,6 +7,7 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import courseRoutes from './routes/course.route.js'; // Make sure to import the course routes
 import path from 'path';
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() => {
@@ -29,14 +30,10 @@ app.use(cookieParser());
 // Serve static files
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-
-//app.get('*', (req, res) => {
-  //  const indexPath = path.resolve(__dirname, 'client', 'build', 'index.html');
-    //console.log('Trying to send:', indexPath);
-    //res.sendFile(indexPath);
-//});
-
-
+// Handle React routing, return all requests to React app
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+// });
 
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
@@ -45,5 +42,3 @@ app.listen(3000, () => {
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/course", courseRoutes);
-
-
