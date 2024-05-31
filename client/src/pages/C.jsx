@@ -101,7 +101,7 @@ export default function C() {
               }}
               className="btn"
             >
-              Start Learning
+              Checkout the course 
             </Link>
           </div>
         </div>

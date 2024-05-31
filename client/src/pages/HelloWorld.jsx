@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import jsPDF from "jspdf";
 import "./HelloWorld.css";
 import { downloadPDF } from "../utils/pdf";
 

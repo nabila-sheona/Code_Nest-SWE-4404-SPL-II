@@ -1,35 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const OperatorsQuizzes = [
-  {
-    question: "What is the result of 5 + 3?",
-    options: ["7", "8", "9", "10"],
-    correctAnswer: "8",
-  },
-  {
-    question: "Which operator is used to compare two values?",
-    options: ["==", "!=", "<", ">"],
-    correctAnswer: "==",
-  },
-  {
-    question: "What is the result of 10 / 3?",
-    options: ["3.33", "3", "3.5", "4"],
-    correctAnswer: "3",
-  },
-  {
-    question: "What is the result of 8 % 3?",
-    options: ["1", "2", "3", "0"],
-    correctAnswer: "2",
-  },
-  {
-    question: "What does the '!' operator do?",
-    options: ["Negates the value", "Adds two values", "Multiplies two values", "Divides two values"],
-    correctAnswer: "Negates the value",
-  },
-];
-
-export default function OperatorsQuiz() {
+export default function Arrayquiz() {
   const [selectedOptions, setSelectedOptions] = useState(
     JSON.parse(localStorage.getItem("selectedOptions")) || {}
   );
@@ -40,6 +12,65 @@ export default function OperatorsQuiz() {
   const [submitted, setSubmitted] = useState(
     JSON.parse(localStorage.getItem("submitted")) || false
   );
+  const [nextLevelUnlocked, setNextLevelUnlocked] = useState(false); // New state for tracking next level unlock
+
+  const questions = [
+    {
+      id: 1,
+      question: "What is the result of 5 + 3?",
+      options: [
+        { id: 1, text: "7" },
+        { id: 2, text: "8" },
+        { id: 3, text: "9" },
+        { id: 4, text: "10" },
+      ],
+      correctOption: 2,
+    },
+    {
+      id: 2,
+      question: "Which operator is used to compare two values?",
+      options: [
+        { id: 1, text: "==" },
+        { id: 2, text: "!=" },
+        { id: 3, text: "<" },
+        { id: 4, text: ">" },
+      ],
+      correctOption: 1,
+    },
+    {
+      id: 3,
+      question: "What is the result of (int)10 / 3?",
+      options: [
+        { id: 1, text: "3.33" },
+        { id: 2, text: "3" },
+        { id: 3, text: "3.5" },
+        { id: 4, text: "4" },
+      ],
+      correctOption: 2,
+    },
+    {
+      id: 4,
+      question: "What is the result of 8 % 3?",
+      options: [
+        { id: 1, text: "1" },
+        { id: 2, text: "2" },
+        { id: 3, text: "3" },
+        { id: 4, text: "0" },
+      ],
+      correctOption: 2,
+    },
+    {
+      id: 5,
+      question: "What does the '!' operator do?",
+      options: [
+        { id: 1, text: "Negates the value" },
+        { id: 2, text: "Adds two values" },
+        { id: 3, text: "Multiplies two values" },
+        { id: 4, text: "Divides two values" },
+      ],
+      correctOption: 1,
+    },
+  ];
 
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
@@ -52,7 +83,7 @@ export default function OperatorsQuiz() {
 
   const handleSubmit = () => {
     if (submitted) return;
-    const unansweredQuestions = OperatorsQuizzes.filter((q) => !selectedOptions[q.question]);
+    const unansweredQuestions = questions.filter((q) => !selectedOptions[q.id]);
     if (unansweredQuestions.length > 0) {
       alert("Please answer all questions before submitting.");
       return;
@@ -61,8 +92,8 @@ export default function OperatorsQuiz() {
 
     let totalScore = 0;
 
-    OperatorsQuizzes.forEach((q) => {
-      if (selectedOptions[q.question] === q.correctAnswer) {
+    questions.forEach((q) => {
+      if (selectedOptions[q.id] === q.correctOption) {
         totalScore += 1;
       }
     });
@@ -72,6 +103,11 @@ export default function OperatorsQuiz() {
 
     setSubmitted(true);
     localStorage.setItem("submitted", JSON.stringify(true));
+
+    // Check if score is more than 3 to unlock next level
+    if (totalScore > 3) {
+      setNextLevelUnlocked(true);
+    }
   };
 
   const getOptionText = (question, optionId) => {
@@ -80,7 +116,7 @@ export default function OperatorsQuiz() {
   };
 
   const handleRefresh = () => {
-    const unansweredQuestions = OperatorsQuizzes.filter((q) => !selectedOptions[q.question]);
+    const unansweredQuestions = questions.filter((q) => !selectedOptions[q.id]);
     if (unansweredQuestions.length > 0) {
       alert(
         "You can't refresh unless you answer all the questions!",
@@ -102,91 +138,126 @@ export default function OperatorsQuiz() {
   }, [selectedOptions, score, submitted]);
 
   return (
-    <div className="flex justify-center h-screen items-center flex-col">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">
-        Quiz on Operators
-      </h1>
-      <div className=" p-8 h-full overflow-y-auto style={{ maxHeight: 'calc(100vh - 150px)' }">
-        <h2 className="text-xl font-bold mb-4">Quiz</h2>
-        {OperatorsQuizzes.map((q, index) => (
-          <div key={index} className="mb-4">
-            <p className="mb-2 font-semibold">{`${index + 1}. ${
-              q.question
-            }`}</p>
-            <ul>
-              {q.options.map((option, idx) => (
-                <li key={idx} className="mb-2">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name={`question-${index}`}
-                      value={option}
-                      onChange={() => handleOptionSelect(q.question, option)}
-                      className="mr-2"
-                      checked={selectedOptions[q.question] === option}
-                      disabled={submitted || selectedOptions[q.question]}
-                    />
-                    {option}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        <div className="flex justify-between w-full mt-4">
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            disabled={submitted}
-          >
-            Submit
-          </button>
+    <div className="flex justify-center items-center flex-col">
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Array</h1>
+      {!submitted && (
+        <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
+          There are 5 questions on ARRAY.You{" "}
+          <span className="underline">
+            must answer all the questions before submitting
+          </span>
+          .Once you answer all the questions you can refresh the page to take
+          the quiz again from the beginning.
+          <span className="underline">
+            You need 80% points for unlocking the next topic.
+          </span>
+        </p>
+      )}
+      {!submitted ? (
+        <div className=" p-8 h-full overflow-y-auto style={{ maxHeight: 'calc(100vh - 150px)' }">
+          {/* <h2 className="text-xl font-bold mb-4">Quiz</h2> */}
+          {questions.map((q, index) => (
+            <div key={q.id} className="mb-4">
+              <p className="mb-2 font-semibold">{`${index + 1}. ${
+                q.question
+              }`}</p>
+              <ul>
+                {q.options.map((option) => (
+                  <li key={option.id} className="mb-2">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name={`question-${q.id}`}
+                        value={option.id}
+                        onChange={() => handleOptionSelect(q.id, option.id)}
+                        className="mr-2"
+                        checked={selectedOptions[q.id] === option.id}
+                      />
+                      {option.text}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div className="flex justify-between w-full mt-4">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              disabled={submitted}
+            >
+              Submit
+            </button>
 
+            <button
+              onClick={handleRefresh}
+              className="bg-green-500 text-white px-4 py-2 rounded"
+            >
+              Refresh
+            </button>
+          </div>
+          {showFeedback && (
+            <div className="mt-4">
+              <p className="text-green-500 text-2xl">Score: {score}/5</p>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="mt-4">
+          <h3 className="text-xl font-bold mb-2">
+            Answer Sheet -{" "}
+            <span className="text-green-500 font-semibold underline">
+              Score: {score}/5
+            </span>
+          </h3>
+          {questions.map((q, index) => (
+            <div key={q.id} className="mb-2">
+              <p className="mb-1 text-blue-800 font-medium">
+                Question: {`${index + 1}. ${q.question}`}
+              </p>
+              <p
+                className={`mb-1 ${
+                  selectedOptions[q.id] === q.correctOption
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                Your Answer: {getOptionText(q, selectedOptions[q.id])}
+              </p>
+              <p>Correct Answer: {getOptionText(q, q.correctOption)}</p>
+            </div>
+          ))}
+          {score === 5 && (
+            <Link
+              to="/operators"
+              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
+            >
+              Go to the Next Level
+            </Link>
+          )}
+          {score >= 3 && nextLevelUnlocked && score < 5 && (
+            <button>
+              <Link
+                to="/operators"
+                className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
+              >
+                Go to the Next Level
+              </Link>
+            </button>
+          )}
           <button
-            onClick={handleRefresh}
-            className="bg-green-500 text-white px-4 py-2 rounded"
+            onClick={() => {
+              setSubmitted(false);
+              setShowFeedback(false);
+              setScore(0);
+              setSelectedOptions({});
+            }}
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
           >
-            Refresh
+            Take Quiz Again
           </button>
         </div>
-
-        {showFeedback && (
-          <div className="mt-4">
-            <p className="text-green-500 text-2xl">Score: {score}/5</p>
-          </div>
-        )}
-
-        {submitted && (
-          <div className="mt-4">
-            <h3 className="text-xl font-bold mb-2">Answer Sheet</h3>
-            {OperatorsQuizzes.map((q, index) => (
-              <div key={index} className="mb-2">
-                <p className="mb-1 text-blue-800 font-medium">
-                  Question: {`${index + 1}. ${q.question}`}
-                </p>
-                <p
-                  className={`mb-1 ${
-                    selectedOptions[q.question] === q.correctAnswer
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  Your Answer: {getOptionText(q, selectedOptions[q.question])}
-                </p>
-                <p>Correct Answer: {getOptionText(q, q.correctAnswer)}</p>
-              </div>
-            ))}
-          </div>
-        )}
-        {score === 5 && (
-          <Link
-            to="/next-quiz-page"
-            className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-          >
-            Go to the Next Level
-          </Link>
-        )}
-      </div>
+      )}
     </div>
   );
 }

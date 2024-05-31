@@ -1,17 +1,110 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Cpp() {
+  const [error, setError] = useState('');
+  const [isRegistered, setIsRegistered] = useState(true);
+  const currentUser = useSelector(state => state.user.currentUser);
+
+  useEffect(() => {
+    const checkRegistration = async () => {
+      if (currentUser) {
+        try {
+          const response = await axios.get(`/api/course/check-registration/${currentUser.username}`);
+          setIsRegistered(response.data.isRegistered);
+        } catch (error) {
+          setError(error.response?.data?.message || 'Failed to check registration.');
+        }
+      }
+    };
+
+    checkRegistration();
+  }, [currentUser]);
+
+  const registerCourse = async () => {
+    const courseData = {
+      courseName: 'Cpp',
+      username: currentUser ? currentUser.username : 'Guest',
+      level: 0,
+      hasStarted: true,
+    };
+
+    try {
+      await axios.post('/api/course/register-course', courseData, {
+        withCredentials: true,
+      });
+      alert('You have successfully started the course!');
+      setIsRegistered(true);
+      setError('');
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Error registering course. Please try again later.';
+      setError(errorMessage);
+    }
+  };
+
   return (
-    <div className='min-h-screen bg-[#262626]'>
-    <div className='w-full px-4 py-12 max-w-2xl mx-auto'>
-      <div className="bg-[#262626] rounded-lg p-8 ">
-        <img src='https://boingboing.net/wp-content/uploads/2015/02/tumblr_nhayn1MH4Q1tcuj64o1_400.gif' alt='GIF' className='mx-auto max-w-md' />
-        <h1 className='text-xl font-serif font-extralight mb-4 text-emerald-500 text-center'>This page is still under construction!</h1>
+    <div className="container mx-auto px-4 py-8 md:px-20 lg:px-32 xl:px-48">
+      <h1 className="text-4xl font-bold mb-6 text-center text-blue-600">
+        C++
+      </h1>
+
+
+      {isRegistered &&
+
+        <Link to="/topics" style={{
+          backgroundColor: "#007BFF",
+          border: "none",
+          color: "white",
+          padding: "24px 48px",
+          textAlign: "center",
+          textDecoration: "none",
+          display: "inline-block",
+          fontSize: "28px",
+          borderRadius: "12px",
+          cursor: "pointer",
+        }} className="btn">
+          Check topics
+        </Link>}
+
+      <Link onClick={registerCourse} style={{
+        backgroundColor: "#007BFF", // Blue shade
+        border: "none",
+        color: "white",
+        padding: "24px 48px",
+        textAlign: "center",
+        textDecoration: "none",
+        display: "inline-block",
+        fontSize: "28px",
+        borderRadius: "12px",
+        cursor: "pointer",
+      }} className="btn">
+        Enter Course
+      </Link>
+      {error && <p className="text-red-700">{error}</p>}
+     
+
+      {isRegistered &&
+        <Link to="/topics" style={{
+          backgroundColor: "#007BFF",
+          border: "none",
+          color: "white",
+          padding: "24px 48px",
+          textAlign: "center",
+          textDecoration: "none",
+          display: "inline-block",
+          fontSize: "28px",
+          borderRadius: "12px",
+          cursor: "pointer",
+        }} className="btn">
+          Check topics
+        </Link>}
         
-        
-      </div>
+
+
+
+     
     </div>
-  </div>
   );
 }
-

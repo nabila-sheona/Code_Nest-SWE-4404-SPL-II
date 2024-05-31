@@ -1,18 +1,19 @@
 import React from "react";
+import Tilt from "react-parallax-tilt";
 export default function About() {
   return (
-    <div className="flex flex-col items-center min-h-screen bg-black text-white">
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-indigo-900 to-sky-400 text-white">
       <div className="max-w-screen-lg mx-auto px-4">
         <br></br>
-        <h1 className="text-3xl font-bold mb-8 text-sky-800 text-center">
+        <h1 className="text-3xl font-bold mb-8 text-sky-400 text-center">
           ABOUT CODE_NEST
         </h1>
         <div class="grid grid-cols-2 gap-4 mx-4">
-          <div class="box bg-gray-900 border border-gray-800 rounded-lg p-8 text-justify">
+          <div class="box bg-gray-900 border border-gray-800 rounded-lg p-8 text-justify bg-sky-400">
             <h1 className="text-2xl font-semibold mb-8 text-sky-800">
               Motivation behind the project:
             </h1>
-            <p className="text-white">
+            <p className="text-indigo-900">
               CODE_NEST is the culmination of our efforts in Software Project
               Lab II, devised to cater to the needs of aspiring programmers.
               <br></br>
@@ -28,33 +29,31 @@ export default function About() {
               your journey to mastery.
             </p>
           </div>
-          <div class="box bg-gray-900 border border-gray-800 rounded-lg p-8 text-justify">
+          <div class="box bg-gray-900 border border-gray-800 rounded-lg p-8 text-justify bg-sky-400">
             <h1 className="text-2xl font-semibold mb-8 text-sky-800">
               About us:
             </h1>
-            <p className="text-white">
+            <p className="text-indigo-900">
               We are currently studying in the 4th semester of software
               engineering in&nbsp;&nbsp;
-              <text className="font-semibold text-green-500">
+              <text className="font-semibold text-white-500">
                 Islamic University of Technology.
               </text>
             </p>
             <br></br>
-            <p className="text-white">Nabila Sheona(210042111)</p>
-            <p className="text-white">Namisa Najah(210042112)</p>
-            <p className="text-white">Faiza Maliat(210042163)</p>
+            <p className="text-indigo-900">Nabila Sheona(210042111)</p>
+            <p className="text-indigo-900">Namisa Najah(210042112)</p>
+            <p className="text-indigo-900">Faiza Maliat(210042163)</p>
           </div>
         </div>
         <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-900 dark:border-gray-800">
           <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2024 CODE_NEST
-            {/*<a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>*/}
-            . All Rights Reserved.
+            © 2024 CODE_NEST.All Rights Reserved.
           </span>
           <div class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
             <li class="mr-4 flex item-center">
               <a
-                href="https://github.com/your-username/your-repo"
+                href="https://github.com/nabila-sheona/Code_Nest.git"
                 target="_blank"
                 class="flex items-center hover:underline"
               >

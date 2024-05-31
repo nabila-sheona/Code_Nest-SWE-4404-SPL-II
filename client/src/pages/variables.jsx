@@ -10,17 +10,6 @@ export default function variables() {
 
   const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
 
-  const handleDownloadPDF = () => {
-    downloadPDF("Var_lecture.pdf"); // Pass the desired file name here
-  };
-
-
-
-
-
-
-
-
   const handleHighlight = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();
@@ -40,9 +29,6 @@ export default function variables() {
     setIsButtonVisible(true); // Show the button when text is highlighted
     //selection.removeAllRanges(); // Clear the selection
   };
-
-  
-
 
   const undoHighlight = () => {
     const lastHighlightedRange = highlightedRanges.pop();
@@ -191,7 +177,7 @@ export default function variables() {
 
       <div className="mt-4 text-center">
         <Link
-          to="/Quiz"
+          to="/variablesquiz"
           className="btn bg-green-500 text-white px-4 py-2 rounded-md"
         >
           Take the quiz to Unlock Next Level
