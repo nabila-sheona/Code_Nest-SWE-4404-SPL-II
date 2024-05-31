@@ -51,10 +51,8 @@ export default function Cpp() {
       </h1>
 
 
-      {isRegistered &&
-
-        <Link to="/topics" style={{
-          backgroundColor: "#007BFF",
+      <Link onClick={registerCourse} to='/topics_for_cpp' style={{
+          backgroundColor: "#007BFF", // Blue shade
           border: "none",
           color: "white",
           padding: "24px 48px",
@@ -63,43 +61,11 @@ export default function Cpp() {
           display: "inline-block",
           fontSize: "28px",
           borderRadius: "12px",
-          cursor: "pointer",
-        }} className="btn">
-          Check topics
-        </Link>}
-
-      <Link onClick={registerCourse} style={{
-        backgroundColor: "#007BFF", // Blue shade
-        border: "none",
-        color: "white",
-        padding: "24px 48px",
-        textAlign: "center",
-        textDecoration: "none",
-        display: "inline-block",
-        fontSize: "28px",
-        borderRadius: "12px",
-        cursor: "pointer",
-      }} className="btn">
-        Enter Course
+          cursor: "pointer",}} className="btn">
+        Enter Course 
       </Link>
-      {error && <p className="text-red-700">{error}</p>}
-     
 
-      {isRegistered &&
-        <Link to="/topics" style={{
-          backgroundColor: "#007BFF",
-          border: "none",
-          color: "white",
-          padding: "24px 48px",
-          textAlign: "center",
-          textDecoration: "none",
-          display: "inline-block",
-          fontSize: "28px",
-          borderRadius: "12px",
-          cursor: "pointer",
-        }} className="btn">
-          Check topics
-        </Link>}
+      {error && <p className="text-red-700">{error}</p>}
         
 
 

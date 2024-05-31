@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   signInStart,
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
 
 export default function SignIn() {
@@ -53,7 +53,7 @@ export default function SignIn() {
           src="https://w0.peakpx.com/wallpaper/250/80/HD-wallpaper-minimalist-code-minimalist-programmer-thumbnail.jpg"
           alt="Welcome Wallpaper"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
-        />{" "}
+        />
         <div className="text-white text-center">
           <h2 className="text-5xl font-bold mb-4">
             <span className="text-cyan-500 inline-block">

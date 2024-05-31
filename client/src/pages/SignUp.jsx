@@ -7,6 +7,7 @@ export default function SignUp() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -35,10 +36,11 @@ export default function SignUp() {
       setError(true);
     }
   };
+
   return (
     <div className="bg-gray-400">
       <div className="p-3 max-w-lg mx-auto bg-gray-400 min-h-screen">
-        <h1 className="text-3xl text-center font-semibold my-7">sign Up</h1>
+        <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
