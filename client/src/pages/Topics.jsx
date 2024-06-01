@@ -17,7 +17,7 @@ export default function C() {
         { name: "For Loops", link: "/for-loops", levelRequired: 6 },
         { name: "While Loops", link: "/while-loops", levelRequired: 7 },
         { name: "Functions", link: "/functions", levelRequired: 8 },
-        { name: "Static", link: "/static", levelRequired: 9 }
+        
     ];
 
     const { currentUser, error } = useSelector((state) => state.user);

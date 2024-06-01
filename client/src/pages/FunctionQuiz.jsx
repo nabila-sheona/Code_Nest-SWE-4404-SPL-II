@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 export default function Quiz() {
   const [selectedOptions, setSelectedOptions] = useState(
     JSON.parse(localStorage.getItem("selectedOptions")) || {}
@@ -17,12 +16,13 @@ export default function Quiz() {
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes timer
-  const [currentLevel, setCurrentLevel] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(
+    JSON.parse(localStorage.getItem("timeLeft")) || 120
+  ); // 2 minutes timer
 
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "C Programming";
-  const courseTopic = "strings";
+  const courseTopic = "functions";
  
   const fetchUserLevel = async () => {
     try {
@@ -45,6 +45,12 @@ export default function Quiz() {
   }, [currentUser, courseName]);
 
 
+  useEffect(() => {
+    if (!sessionStorage.getItem("hasRefreshed")) {
+      sessionStorage.setItem("hasRefreshed", "true");
+      window.location.reload();
+    }
+  }, []);
 
   useEffect(() => {
     if (submitted) return;
@@ -56,6 +62,7 @@ export default function Quiz() {
           handleSubmit(true); // Auto-submit when timer reaches zero
           return 0;
         }
+        localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
         return prevTime - 1;
       });
     }, 1000);
@@ -63,276 +70,226 @@ export default function Quiz() {
     return () => clearInterval(timer);
   }, [submitted]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (!submitted) {
-        const confirmationMessage =
-          "You can't refresh the page before finishing the quiz!";
-        e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
-        return confirmationMessage; // Gecko, WebKit, Chrome <34
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      localStorage.removeItem("timeLeft"); // Clear the timer when the component unmounts
-    };
-  }, [submitted]);
-
   const questions = [
     {
       id: 1,
-      question:
-        'How do you declare and initialize a string in C?\n\nOptions:\n1. int greeting = "Hello, world!";\n2. char greeting[] = "Hello, world!";\n3. string greeting = "Hello, world!";\n4. char greeting = "Hello, world!";',
+      question: "Which of the following is NOT a valid return type for a function in C?",
       options: [
-        { id: 1, text: 'int greeting = "Hello, world!";' },
-        { id: 2, text: 'char greeting[] = "Hello, world!";' },
-        { id: 3, text: 'string greeting = "Hello, world!";' },
-        { id: 4, text: 'char greeting = "Hello, world!";' },
+        { id: 1, text: "void" },
+        { id: 2, text: "int" },
+        { id: 3, text: "float" },
+        { id: 4, text: "string" },
       ],
-      correctOption: 2,
+      correctOption: 4,
     },
     {
       id: 2,
-      question:
-        'How do you print a string in C?\n\nOptions:\n1. printf("%d", greeting);\n2. printf("%s", greeting);\n3. printf("%c", greeting);\n4. printf("%f", greeting);',
+      question: "Which keyword is used to return a value from a function in C?",
       options: [
-        { id: 1, text: 'printf("%d", greeting);' },
-        { id: 2, text: 'printf("%s", greeting);' },
-        { id: 3, text: 'printf("%c", greeting);' },
-        { id: 4, text: 'printf("%f", greeting);' },
-      ],
-      correctOption: 2,
-    },
-    {
-      id: 3,
-      question:
-        "Which function is used to find the length of a string in C?\n\nOptions:\n1. strlen()\n2. strcpy()\n3. strcat()\n4. strlength()",
-      options: [
-        { id: 1, text: "strlen()" },
-        { id: 2, text: "strcpy()" },
-        { id: 3, text: "strcat()" },
-        { id: 4, text: "strlength()" },
+        { id: 1, text: "return" },
+        { id: 2, text: "yield" },
+        { id: 3, text: "giveback" },
+        { id: 4, text: "output" },
       ],
       correctOption: 1,
     },
     {
-      id: 4,
-      question:
-        "Which function is used to copy one string to another in C?\n\nOptions:\n1. strlen()\n2. strcpy()\n3. strcat()\n4. strcopy()",
+      id: 3,
+      question: "Which of the following is the correct syntax for a function declaration in C?",
       options: [
-        { id: 1, text: "strlen()" },
-        { id: 2, text: "strcpy()" },
-        { id: 3, text: "strcat()" },
-        { id: 4, text: "strcopy()" },
+        { id: 1, text: "functionName(returnType);" },
+        { id: 2, text: "returnType functionName();" },
+        { id: 3, text: "functionName returnType();" },
+        { id: 4, text: "returnType functionName(params)" },
       ],
       correctOption: 2,
     },
     {
-      id: 5,
-      question:
-        "Which function is used to concatenate two strings in C?\n\nOptions:\n1. strlen()\n2. strcpy()\n3. strcat()\n4. strconcat()",
+      id: 4,
+      question: "What is the output of the following function call: printf(\"%d\", sum(2, 3)); if the sum function is defined as int sum(int a, int b) { return a + b; }?",
       options: [
-        { id: 1, text: "strlen()" },
-        { id: 2, text: "strcpy()" },
-        { id: 3, text: "strcat()" },
-        { id: 4, text: "strconcat()" },
+        { id: 1, text: "5" },
+        { id: 2, text: "2" },
+        { id: 3, text: "3" },
+        { id: 4, text: "Error" },
       ],
-      correctOption: 3,
+      correctOption: 1,
+    },
+    {
+      id: 5,
+      question: "Which of the following is true about functions in C?",
+      options: [
+        { id: 1, text: "Functions cannot return arrays" },
+        { id: 2, text: "Functions can return multiple values" },
+        { id: 3, text: "Functions can have default parameters" },
+        { id: 4, text: "Functions cannot be recursive" },
+      ],
+      correctOption: 1,
     },
     {
       id: 6,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20] = "World";\n\n    printf("Length of str1: %d\\n", strlen(str1));\n    printf("Concatenated string: %s\\n", strcat(str1, str2));\n    printf("Copied string: %s\\n", strcpy(str2, str1));\n\n    return 0;\n}',
+      question: "Which of the following is the correct way to define a function in C that takes two integer parameters and returns an integer?",
       options: [
-        {
-          id: 1,
-          text: "Length of str1: 5\nConcatenated string: HelloWorld\nCopied string: HelloWorld",
-        },
-        {
-          id: 2,
-          text: "Length of str1: 5\nConcatenated string: Hello World\nCopied string: Hello World",
-        },
-        {
-          id: 3,
-          text: "Length of str1: 5\nConcatenated string: HelloWorld\nCopied string: WorldHello",
-        },
-        {
-          id: 4,
-          text: "Length of str1: 5\nConcatenated string: Hello World\nCopied string: World Hello",
-        },
+        { id: 1, text: "int function(int a, int b) { return a + b; }" },
+        { id: 2, text: "int function(a, b) { return a + b; }" },
+        { id: 3, text: "function(int a, int b) { return a + b; }" },
+        { id: 4, text: "function(int a, int b) -> int { return a + b; }" },
       ],
       correctOption: 1,
     },
     {
       id: 7,
-      question:
-        "Which character is used to terminate a string in C?\n\nOptions:\n1. \\n\n2. \\t\n3. \\0\n4. \\b",
+      question: "What is the default return type of a function if not specified in C?",
       options: [
-        { id: 1, text: "\\n" },
-        { id: 2, text: "\\t" },
-        { id: 3, text: "\\0" },
-        { id: 4, text: "\\b" },
-      ],
-      correctOption: 3,
-    },
-    {
-      id: 8,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "C programming";\n    printf("Length of str1: %d\\n", strlen(str1));\n    return 0;\n}',
-      options: [
-        { id: 1, text: "Length of str1: 13" },
-        { id: 2, text: "Length of str1: 12" },
-        { id: 3, text: "Length of str1: 14" },
-        { id: 4, text: "Length of str1: 11" },
-      ],
-      correctOption: 1,
-    },
-    {
-      id: 9,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20] = "World";\n    strcat(str1, str2);\n    printf("%s\\n", str1);\n    return 0;\n}',
-      options: [
-        { id: 1, text: "Hello World" },
-        { id: 2, text: "HelloWorld" },
-        { id: 3, text: "WorldHello" },
-        { id: 4, text: "Hello" },
+        { id: 1, text: "void" },
+        { id: 2, text: "int" },
+        { id: 3, text: "float" },
+        { id: 4, text: "char" },
       ],
       correctOption: 2,
     },
     {
-      id: 10,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20];\n    strcpy(str2, str1);\n    printf("%s\\n", str2);\n    return 0;\n}',
+      id: 8,
+      question: "What does the term 'function prototype' mean in C?",
       options: [
-        { id: 1, text: "Hello" },
-        { id: 2, text: "HelloHello" },
-        { id: 3, text: "World" },
-        { id: 4, text: "No output" },
+        { id: 1, text: "A function that is used to create objects" },
+        { id: 2, text: "A function that returns a pointer" },
+        { id: 3, text: "A declaration of a function that specifies the function's name, return type, and parameters" },
+        { id: 4, text: "A function that is used only once" },
+      ],
+      correctOption: 3,
+    },
+    {
+      id: 9,
+      question: "Which of the following is a correct function prototype in C?",
+      options: [
+        { id: 1, text: "void function(int a);" },
+        { id: 2, text: "function void(int a);" },
+        { id: 3, text: "void function(a int);" },
+        { id: 4, text: "int function void(int a);" },
       ],
       correctOption: 1,
+    },
+    {
+      id: 10,
+      question: "Which of the following is NOT a valid function name in C?",
+      options: [
+        { id: 1, text: "main" },
+        { id: 2, text: "func_1" },
+        { id: 3, text: "1func" },
+        { id: 4, text: "_func" },
+      ],
+      correctOption: 3,
     },
     {
       id: 11,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    char str[] = "Hello, world!";\n    printf("%c\\n", str[7]);\n    return 0;\n}',
+      question: "What will be the output of the following code: void func() { static int x = 0; x++; printf(\"%d\", x); } int main() { func(); func(); }",
       options: [
-        { id: 1, text: "w" },
-        { id: 2, text: "o" },
-        { id: 3, text: "l" },
-        { id: 4, text: "d" },
+        { id: 1, text: "1 1" },
+        { id: 2, text: "1 2" },
+        { id: 3, text: "2 2" },
+        { id: 4, text: "0 1" },
       ],
-      correctOption: 1,
+      correctOption: 2,
     },
     {
       id: 12,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20] = "World";\n    printf("%d\\n", strcmp(str1, str2));\n    return 0;\n}',
+      question: "Which of the following is a correct statement about function overloading in C?",
       options: [
-        { id: 1, text: "0" },
-        { id: 2, text: "-1" },
-        { id: 3, text: "1" },
-        { id: 4, text: "No output" },
+        { id: 1, text: "C supports function overloading" },
+        { id: 2, text: "C does not support function overloading" },
+        { id: 3, text: "Function overloading is the same as function overriding" },
+        { id: 4, text: "Function overloading is supported in C++ only" },
       ],
       correctOption: 2,
     },
     {
       id: 13,
-      question:
-        "Which function is used to compare two strings in C?\n\nOptions:\n1. strlen()\n2. strcmp()\n3. strcpy()\n4. strcompare()",
+      question: "What is the purpose of the return statement in a function?",
       options: [
-        { id: 1, text: "strlen()" },
-        { id: 2, text: "strcmp()" },
-        { id: 3, text: "strcpy()" },
-        { id: 4, text: "strcompare()" },
+        { id: 1, text: "To return a value to the calling function" },
+        { id: 2, text: "To end the function execution" },
+        { id: 3, text: "To pass control back to the calling function" },
+        { id: 4, text: "All of the above" },
       ],
-      correctOption: 2,
+      correctOption: 4,
     },
     {
       id: 14,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20] = "Hello";\n    printf("%d\\n", strcmp(str1, str2));\n    return 0;\n}',
+      question: "What will happen if a function with a void return type has a return statement with a value?",
       options: [
-        { id: 1, text: "0" },
-        { id: 2, text: "-1" },
-        { id: 3, text: "1" },
-        { id: 4, text: "No output" },
+        { id: 1, text: "Compilation error" },
+        { id: 2, text: "Runtime error" },
+        { id: 3, text: "No error" },
+        { id: 4, text: "Undefined behavior" },
       ],
       correctOption: 1,
     },
     {
       id: 15,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20] = "World";\n    strcpy(str1, str2);\n    printf("%s\\n", str1);\n    return 0;\n}',
+      question: "What is the scope of a variable declared inside a function in C?",
       options: [
-        { id: 1, text: "World" },
-        { id: 2, text: "Hello" },
-        { id: 3, text: "HelloWorld" },
-        { id: 4, text: "WorldHello" },
+        { id: 1, text: "Global scope" },
+        { id: 2, text: "Local scope" },
+        { id: 3, text: "Block scope" },
+        { id: 4, text: "File scope" },
       ],
-      correctOption: 1,
+      correctOption: 2,
     },
     {
       id: 16,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20] = "World";\n    strcat(str1, " ");\n    strcat(str1, str2);\n    printf("%s\\n", str1);\n    return 0;\n}',
+      question: "Which of the following is true about inline functions in C?",
       options: [
-        { id: 1, text: "Hello World" },
-        { id: 2, text: "HelloWorld" },
-        { id: 3, text: "World Hello" },
-        { id: 4, text: "Hello " },
+        { id: 1, text: "They are defined using the keyword inline" },
+        { id: 2, text: "They are faster than normal functions" },
+        { id: 3, text: "They reduce the overhead of function calls" },
+        { id: 4, text: "All of the above" },
       ],
-      correctOption: 1,
+      correctOption: 4,
     },
     {
       id: 17,
-      question:
-        'What will be the output of the following code?\n\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello";\n    char str2[20];\n    strncpy(str2, str1, 3);\n    str2[3] = \'\\0\';\n    printf("%s\\n", str2);\n    return 0;\n}',
+      question: "What will be the output of the following code: int func(int a) { if(a <= 1) return 1; return a * func(a - 1); } int main() { printf(\"%d\", func(3)); }",
       options: [
-        { id: 1, text: "Hel" },
-        { id: 2, text: "Hello" },
-        { id: 3, text: "Hel\0lo" },
-        { id: 4, text: "He" },
+        { id: 1, text: "1" },
+        { id: 2, text: "3" },
+        { id: 3, text: "6" },
+        { id: 4, text: "Error" },
       ],
-      correctOption: 1,
+      correctOption: 3,
     },
     {
       id: 18,
-      question:
-        "Which function is used to copy a specified number of characters from one string to another in C?\n\nOptions:\n1. strncpy()\n2. strcpy()\n3. strncopy()\n4. strcopy()",
+      question: "What is the output of the following code: int sum(int a, int b) { return a + b; } int main() { int result = sum(5, 3); printf(\"%d\", result); }",
       options: [
-        { id: 1, text: "strncpy()" },
-        { id: 2, text: "strcpy()" },
-        { id: 3, text: "strncopy()" },
-        { id: 4, text: "strcopy()" },
+        { id: 1, text: "8" },
+        { id: 2, text: "5" },
+        { id: 3, text: "3" },
+        { id: 4, text: "Error" },
       ],
       correctOption: 1,
     },
     {
       id: 19,
-      question:
-        "Which function is used to find the first occurrence of a character in a string in C?\n\nOptions:\n1. strchr()\n2. strstr()\n3. strchar()\n4. strsearch()",
+      question: "What will be the output of the following code: void func() { printf(\"Hello, World!\"); } int main() { func(); }",
       options: [
-        { id: 1, text: "strchr()" },
-        { id: 2, text: "strstr()" },
-        { id: 3, text: "strchar()" },
-        { id: 4, text: "strsearch()" },
+        { id: 1, text: "Hello, World!" },
+        { id: 2, text: "Hello" },
+        { id: 3, text: "World" },
+        { id: 4, text: "Error" },
       ],
       correctOption: 1,
     },
     {
       id: 20,
-      question:
-        "Which function is used to find the first occurrence of a substring in a string in C?\n\nOptions:\n1. strchr()\n2. strstr()\n3. strsub()\n4. strfind()",
+      question: "Which of the following is not a valid function declaration?",
       options: [
-        { id: 1, text: "strchr()" },
-        { id: 2, text: "strstr()" },
-        { id: 3, text: "strsub()" },
-        { id: 4, text: "strfind()" },
+        { id: 1, text: "void func();" },
+        { id: 2, text: "int func();" },
+        { id: 3, text: "float func();" },
+        { id: 4, text: "void func(int);" },
       ],
-      correctOption: 2,
+      correctOption: 4,
     },
   ];
 
@@ -378,7 +335,7 @@ export default function Quiz() {
   };
 
   const handleLevelUpdate = async () => {
-    if (currentLevel < 6) {
+    if (currentLevel < 9) {
       await unlockNextLevel();
     } else {
       navigateToNextPage();
@@ -401,7 +358,7 @@ export default function Quiz() {
 
       const data = await response.json();
       if (data.success) {
-        window.location.href = "/for-loops";
+        window.location.href = "/theend";
       } else {
         console.error("Failed to unlock next level");
       }
@@ -431,7 +388,7 @@ export default function Quiz() {
     }
   };
   const navigateToNextPage = () => {
-    window.location.href = "/for-loops";
+    window.location.href = "/theend";
   };
 
 
@@ -464,6 +421,7 @@ export default function Quiz() {
     localStorage.removeItem("selectedOptions");
     localStorage.removeItem("score");
     localStorage.removeItem("submitted");
+    localStorage.removeItem("timeLeft");
 
     window.location.reload();
   };
@@ -478,7 +436,7 @@ export default function Quiz() {
 
   return (
     <div className="flex justify-center items-center flex-col h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Strings</h1>
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Functions</h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
           Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
@@ -486,7 +444,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 5 questions on STRINGS. You{" "}
+          There are 5 questions on Functions. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>

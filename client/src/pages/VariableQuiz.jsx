@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Quiz() {
   const [selectedOptions, setSelectedOptions] = useState(
@@ -13,20 +14,35 @@ export default function Quiz() {
     JSON.parse(localStorage.getItem("submitted")) || false
   );
   const [nextLevelUnlocked, setNextLevelUnlocked] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState(0);
+
+  const { currentUser } = useSelector((state) => state.user);
+  const courseName = "C Programming";
+  const courseTopic = "variables";
+
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
-  const [timeLeft, setTimeLeft] = useState(
-    JSON.parse(localStorage.getItem("timeLeft")) || 120
-  ); // 2 minutes timer
-
-  // Auto-refresh on page load only once
-  useEffect(() => {
-    if (!sessionStorage.getItem("hasRefreshed")) {
-      sessionStorage.setItem("hasRefreshed", "true");
-      window.location.reload();
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes timer
+const fetchUserLevel = async () => {
+    try {
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user level");
+      }
+      const data = await response.json();
+      setCurrentLevel(data);
+    } catch (error) {
+      console.error("Error fetching user level:", error);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    if (currentUser && currentUser.username && courseName) {
+      fetchUserLevel();
+    }
+  }, [currentUser, courseName]);
 
   useEffect(() => {
     if (submitted) return;
@@ -38,12 +54,29 @@ export default function Quiz() {
           handleSubmit(true); // Auto-submit when timer reaches zero
           return 0;
         }
-        localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
         return prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(timer);
+  }, [submitted]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!submitted) {
+        const confirmationMessage =
+          "You can't refresh the page before finishing the quiz!";
+        e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
+        return confirmationMessage; // Gecko, WebKit, Chrome <34
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      localStorage.removeItem("timeLeft"); // Clear the timer when the component unmounts
+    };
   }, [submitted]);
 
   const questions = [
@@ -272,6 +305,7 @@ export default function Quiz() {
       correctOption: 4,
     },
   ];
+
   const questionSets = [
     questions.slice(0, 5),
     questions.slice(5, 10),
@@ -313,6 +347,39 @@ export default function Quiz() {
     }
   };
 
+  const handleLevelUpdate = async () => {
+    if (currentLevel < 2) {
+      await unlockNextLevel();
+    } else {
+      navigateToNextPage();
+    }
+  };
+
+  const unlockNextLevel = async () => {
+    try {
+      const response = await fetch(`/api/course/unlock-next-level`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseName,
+          courseTopic,
+          username: currentUser.username,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        window.location.href = "/array";
+      } else {
+        console.error("Failed to unlock next level");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const updateUserLevel = async () => {
     try {
       const response = await fetch("/api/update-level", {
@@ -333,7 +400,9 @@ export default function Quiz() {
       console.error("Error updating user level:", error);
     }
   };
-
+  const navigateToNextPage = () => {
+    window.location.href = "/array";
+  };
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
       setSelectedOptions({
@@ -363,7 +432,6 @@ export default function Quiz() {
     localStorage.removeItem("selectedOptions");
     localStorage.removeItem("score");
     localStorage.removeItem("submitted");
-    localStorage.removeItem("timeLeft");
 
     window.location.reload();
   };
@@ -477,24 +545,12 @@ export default function Quiz() {
             ))}
           </div>
 
-          {score === 5 && (
-            <Link
-              to="/array"
-              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-            >
-              Go to the Next Level
-            </Link>
-          )}
-          {score >= 3 && nextLevelUnlocked && score < 5 && (
-            <button>
-              <Link
-                to="/array"
-                className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-              >
-                Go to the Next Level
-              </Link>
+          {score >= 4 && (
+            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
+              Unlock Next Level
             </button>
           )}
+         
           <button
             onClick={() => {
               setSubmitted(false);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Quiz() {
   const [selectedOptions, setSelectedOptions] = useState(
@@ -13,20 +14,36 @@ export default function Quiz() {
     JSON.parse(localStorage.getItem("submitted")) || false
   );
   const [nextLevelUnlocked, setNextLevelUnlocked] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState(0);
+
+  const { currentUser } = useSelector((state) => state.user);
+  const courseName = "C Programming";
+  const courseTopic = "forloops";
+
+  const fetchUserLevel = async () => {
+    try {
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user level");
+      }
+      const data = await response.json();
+      setCurrentLevel(data);
+    } catch (error) {
+      console.error("Error fetching user level:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser && currentUser.username && courseName) {
+      fetchUserLevel();
+    }
+  }, [currentUser, courseName]);
+
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
-  const [timeLeft, setTimeLeft] = useState(
-    JSON.parse(localStorage.getItem("timeLeft")) || 120
-  ); // 2 minutes timer
-
-  // Auto-refresh on page load only once
-  useEffect(() => {
-    if (!sessionStorage.getItem("hasRefreshed")) {
-      sessionStorage.setItem("hasRefreshed", "true");
-      window.location.reload();
-    }
-  }, []);
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes timer
 
   useEffect(() => {
     if (submitted) return;
@@ -38,12 +55,29 @@ export default function Quiz() {
           handleSubmit(true); // Auto-submit when timer reaches zero
           return 0;
         }
-        localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
         return prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(timer);
+  }, [submitted]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!submitted) {
+        const confirmationMessage =
+          "You can't refresh the page before finishing the quiz!";
+        e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
+        return confirmationMessage; // Gecko, WebKit, Chrome <34
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      localStorage.removeItem("timeLeft"); // Clear the timer when the component unmounts
+    };
   }, [submitted]);
 
   const questions = [
@@ -396,6 +430,7 @@ export default function Quiz() {
       correctOption: 3,
     },
   ];
+
   const questionSets = [
     questions.slice(0, 5),
     questions.slice(5, 10),
@@ -437,6 +472,39 @@ export default function Quiz() {
     }
   };
 
+  const handleLevelUpdate = async () => {
+    if (currentLevel < 7) {
+      await unlockNextLevel();
+    } else {
+      navigateToNextPage();
+    }
+  };
+
+  const unlockNextLevel = async () => {
+    try {
+      const response = await fetch(`/api/course/unlock-next-level`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseName,
+          courseTopic,
+          username: currentUser.username,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        window.location.href = "/while-loops";
+      } else {
+        console.error("Failed to unlock next level");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const updateUserLevel = async () => {
     try {
       const response = await fetch("/api/update-level", {
@@ -456,6 +524,9 @@ export default function Quiz() {
     } catch (error) {
       console.error("Error updating user level:", error);
     }
+  };
+  const navigateToNextPage = () => {
+    window.location.href = "/while-loops";
   };
 
   const handleOptionSelect = (questionId, optionId) => {
@@ -487,7 +558,6 @@ export default function Quiz() {
     localStorage.removeItem("selectedOptions");
     localStorage.removeItem("score");
     localStorage.removeItem("submitted");
-    localStorage.removeItem("timeLeft");
 
     window.location.reload();
   };
@@ -503,7 +573,7 @@ export default function Quiz() {
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <h1 className="text-3xl font-bold mb-8 text-sky-800">
-        Quiz on Variables
+        Quiz on For-Loops
       </h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
@@ -512,7 +582,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 5 questions on VARIABLES. You{" "}
+          There are 5 questions on FOR LOOPS. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>
@@ -600,23 +670,9 @@ export default function Quiz() {
               </div>
             ))}
           </div>
-
-          {score === 5 && (
-            <Link
-              to="/while-loops"
-              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-            >
-              Go to the Next Level
-            </Link>
-          )}
-          {score >= 3 && nextLevelUnlocked && score < 5 && (
-            <button>
-              <Link
-                to="/while-loops"
-                className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-              >
-                Go to the Next Level
-              </Link>
+          {score >= 4 && (
+            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
+              Unlock Next Level
             </button>
           )}
           <button

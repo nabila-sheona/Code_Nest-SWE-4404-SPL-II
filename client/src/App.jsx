@@ -29,6 +29,8 @@ import ForLoop from "./pages/ForLoop";
 import ForLoopQuiz from "./pages/ForLoopQuiz";
 import While from "./pages/While";
 import WhileQuiz from "./pages/WhileQuiz";
+import Functions from "./pages/Functions";
+import FunctionQuiz from "./pages/FunctionQuiz";
 
 export default function App() {
   return (
@@ -61,6 +63,8 @@ export default function App() {
           <Route path="/for-loopsQuiz" element={<ForLoopQuiz />} />
           <Route path="/while-loops" element={<While />} />
           <Route path="/while-loopsQuiz" element={<WhileQuiz />} />
+          <Route path="/functions" element={<Functions />} />
+          <Route path="/functionsQuiz" element={<FunctionQuiz />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />

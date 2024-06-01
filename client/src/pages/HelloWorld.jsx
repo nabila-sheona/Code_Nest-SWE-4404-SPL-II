@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./HelloWorld.css";
 import { downloadPDF } from "../utils/pdf";
+import { useSelector } from 'react-redux';
 
 export default function HelloWorld() {
   const pdfRef = useRef();
@@ -11,6 +12,71 @@ export default function HelloWorld() {
   const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
   const MAX_TEXT_LENGTH = 30;
   const location = useLocation();
+
+  const [currentLevel, setCurrentLevel] = useState(0);
+
+  const { currentUser } = useSelector((state) => state.user);
+  const courseName = 'C Programming';
+  const courseTopic = 'helloworld';
+
+ const fetchUserLevel = async () => {
+    try {
+        // Corrected to handle spaces in the course name using encodeURIComponent
+        const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user level');
+        }
+        const data = await response.json();
+        // Assuming data directly returns the level
+        setCurrentLevel(data);
+    } catch (error) {
+        console.error('Error fetching user level:', error);
+    }
+};
+
+useEffect(() => {
+    if (currentUser && currentUser.username && courseName) {
+        fetchUserLevel();
+    }
+}, [currentUser, courseName]); // Dependency array includes currentUser and courseName
+
+
+  const NextLevel = () => {
+    //variable the fetchUserLevel and check if level >=1
+    window.location.href = "/variables";
+  };
+
+  const unlockNextLevel = async () => {
+    try {
+      const response = await fetch(`/api/course/unlock-next-level`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseName,
+          courseTopic,
+          username: currentUser.username,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        window.location.href = "/variables";
+      } else {
+        console.error("Failed to unlock next level");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser && currentUser.username && courseName) {
+      fetchUserLevel();
+    }
+  }, [currentUser, courseName]);
 
   useEffect(() => {
     if (location.pathname === "/hello-world") {
@@ -86,35 +152,7 @@ export default function HelloWorld() {
     setUserText(newText);
   };
 
-  const unlockNextLevel = () => {
-    window.location.href = "/variables";
-
-    // Assuming you are using fetch API to send data to the backend
-    fetch("/api/unlockNextLevel", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        /* Any data you want to send to the backend */
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle response from the server
-        console.log(data);
-        // Assuming the server responds with success
-        if (data.success) {
-          // Navigate to variables.jsx
-          window.location.href = "/variables";
-        } else {
-          console.error("Failed to unlock next level");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
@@ -210,14 +248,23 @@ int main() {
 
       <p className="mt-4">Highlighted Text: {highlightedText}</p>
 
+      
       {/* Unlock Next Level button */}
       <div className="mt-4">
-        <Link
-          to="/variables"
-          className="btn bg-green-500 text-white px-4 py-2 rounded-md"
-        >
-          Go to the Next Level
-        </Link>
+        { currentLevel < 1 ? (
+          
+          <button
+            className="bg-sky-800 text-white px-4 py-2 rounded-md"
+            onClick={unlockNextLevel}
+          >
+            Unlock Next Level
+          </button>
+        ):<button
+        className="bg-sky-800 text-white px-4 py-2 rounded-md"
+        onClick={NextLevel}
+      >
+         Next Level
+      </button> }
       </div>
     </div>
   );
