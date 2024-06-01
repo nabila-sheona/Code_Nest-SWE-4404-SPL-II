@@ -1,32 +1,56 @@
-import React, { useState,  } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function CForeword() {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const currentUser = useSelector(state => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  useEffect(() => {
+    if (location.pathname === "/c-foreword") {
+      const scriptConfig = document.createElement("script");
+      scriptConfig.innerHTML = `
+      window.embeddedChatbotConfig = {
+        chatbotId: "28nNGKdoeW0eGCRMw54kM",
+        domain: "www.chatbase.co"
+      };
+    `;
+      document.body.appendChild(scriptConfig);
 
- 
+      const scriptEmbed = document.createElement("script");
+      scriptEmbed.src = "https://www.chatbase.co/embed.min.js";
+      scriptEmbed.setAttribute("chatbotId", "28nNGKdoeW0eGCRMw54kM");
+      scriptEmbed.setAttribute("domain", "www.chatbase.co");
+      scriptEmbed.defer = true;
+      document.body.appendChild(scriptEmbed);
+
+      return () => {
+        document.body.removeChild(scriptConfig);
+        document.body.removeChild(scriptEmbed);
+      };
+    }
+  }, [location.pathname]);
+
   const registerCourse = async () => {
     const courseData = {
-      courseName: 'C Programming',
-      username: currentUser ? currentUser.username : 'Guest',
+      courseName: "C Programming",
+      username: currentUser ? currentUser.username : "Guest",
       level: 0,
       hasStarted: true,
     };
 
     try {
-      await axios.post('/api/course/register-course', courseData, {
+      await axios.post("/api/course/register-course", courseData, {
         withCredentials: true,
       });
-      alert('You have successfully started the course!');
+      alert("You have successfully started the course!");
       setIsRegistered(true);
-      setError('');
+      setError("");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Error registering course. Please try again later.';
+      const errorMessage =
+        error.response?.data?.message ||
+        "Error registering course. Please try again later.";
       setError(errorMessage);
     }
   };
@@ -123,8 +147,11 @@ export default function CForeword() {
         learn from this book if you later tackle C++. Many of the features of C
         can be found in the other C-based languages as well.
       </p>
-     
-      <Link onClick={registerCourse} to='/topics' style={{
+
+      <Link
+        onClick={registerCourse}
+        to="/topics"
+        style={{
           backgroundColor: "#007BFF", // Blue shade
           border: "none",
           color: "white",
@@ -134,8 +161,11 @@ export default function CForeword() {
           display: "inline-block",
           fontSize: "28px",
           borderRadius: "12px",
-          cursor: "pointer",}} className="btn">
-        Enter Course 
+          cursor: "pointer",
+        }}
+        className="btn"
+      >
+        Enter Course
       </Link>
 
       {error && <p className="text-red-700">{error}</p>}

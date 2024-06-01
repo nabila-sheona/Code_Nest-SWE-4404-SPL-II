@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { downloadPDF } from "../utils/pdf";
 
 export default function Operators() {
@@ -9,6 +9,30 @@ export default function Operators() {
   const MAX_TEXT_LENGTH = 30;
 
   const pdfRef = useRef();
+  useEffect(() => {
+    if (location.pathname === "/operators") {
+      const scriptConfig = document.createElement("script");
+      scriptConfig.innerHTML = `
+      window.embeddedChatbotConfig = {
+        chatbotId: "28nNGKdoeW0eGCRMw54kM",
+        domain: "www.chatbase.co"
+      };
+    `;
+      document.body.appendChild(scriptConfig);
+
+      const scriptEmbed = document.createElement("script");
+      scriptEmbed.src = "https://www.chatbase.co/embed.min.js";
+      scriptEmbed.setAttribute("chatbotId", "28nNGKdoeW0eGCRMw54kM");
+      scriptEmbed.setAttribute("domain", "www.chatbase.co");
+      scriptEmbed.defer = true;
+      document.body.appendChild(scriptEmbed);
+
+      return () => {
+        document.body.removeChild(scriptConfig);
+        document.body.removeChild(scriptEmbed);
+      };
+    }
+  }, [location.pathname]);
 
   const handleHighlight = () => {
     const selection = window.getSelection();
@@ -94,6 +118,109 @@ export default function Operators() {
             Bitwise Operators: <code>&, |, ^, ~, {"<<, >>"}</code>
           </li>
         </ul>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Arithmetic Operators
+        </h2>
+        <p>
+          Arithmetic operators are used to perform mathematical operations such
+          as addition, subtraction, multiplication, division, and modulus.
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+int a = 10;
+int b = 20;
+int sum = a + b; // sum is 30
+int difference = a - b; // difference is -10
+int product = a * b; // product is 200
+int quotient = a / b; // quotient is 0
+int remainder = a % b; // remainder is 10
+            `}
+          </code>
+        </pre>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Relational Operators
+        </h2>
+        <p>
+          Relational operators are used to compare two values. They return a
+          boolean result (true or false).
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+int x = 10;
+int y = 20;
+bool isEqual = (x == y); // isEqual is false
+bool isNotEqual = (x != y); // isNotEqual is true
+bool isLess = (x < y); // isLess is true
+bool isGreater = (x > y); // isGreater is false
+bool isLessOrEqual = (x <= y); // isLessOrEqual is true
+bool isGreaterOrEqual = (x >= y); // isGreaterOrEqual is false
+            `}
+          </code>
+        </pre>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Logical Operators
+        </h2>
+        <p>
+          Logical operators are used to combine multiple boolean expressions.
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+bool a = true;
+bool b = false;
+bool andResult = a && b; // andResult is false
+bool orResult = a || b; // orResult is true
+bool notResult = !a; // notResult is false
+            `}
+          </code>
+        </pre>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Assignment Operators
+        </h2>
+        <p>
+          Assignment operators are used to assign values to variables. They also
+          provide shorthand for common operations.
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+int a = 10;
+a += 5; // a is now 15
+a -= 3; // a is now 12
+a *= 2; // a is now 24
+a /= 4; // a is now 6
+a %= 3; // a is now 0
+            `}
+          </code>
+        </pre>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Bitwise Operators
+        </h2>
+        <p>
+          Bitwise operators are used to perform bit-level operations on data.
+          These operators work on the binary representation of the operands.
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+int a = 5; // binary: 0101
+int b = 3; // binary: 0011
+int andResult = a & b; // andResult is 1 (binary: 0001)
+int orResult = a | b; // orResult is 7 (binary: 0111)
+int xorResult = a ^ b; // xorResult is 6 (binary: 0110)
+int notResult = ~a; // notResult is -6 (binary: ...1010)
+int leftShift = a << 1; // leftShift is 10 (binary: 1010)
+int rightShift = a >> 1; // rightShift is 2 (binary: 0010)
+            `}
+          </code>
+        </pre>
       </div>
 
       <div className="mt-4">

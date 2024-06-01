@@ -510,7 +510,7 @@ export default function Quiz() {
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <h1 className="text-3xl font-bold mb-8 text-sky-800">
-        Quiz on For Loops
+        Quiz on For-Loops
       </h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
@@ -519,8 +519,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 20 questions on FOR LOOPS divided into 4 sets of 5 questions
-          each. You{" "}
+          There are 5 questions on FOR LOOPS. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>

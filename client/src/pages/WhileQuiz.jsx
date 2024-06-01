@@ -434,8 +434,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 20 questions on WHILE LOOPS divided into 4 sets of 5
-          questions each. You{" "}
+          There are 5 questions on WHILE LOOPS. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./HelloWorld.css"; // Import CSS for styling
 import { downloadPDF } from "../utils/pdf";
@@ -9,6 +9,31 @@ export default function variables() {
   const [highlightedRanges, setHighlightedRanges] = useState([]);
 
   const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
+
+  useEffect(() => {
+    if (location.pathname === "/variables") {
+      const scriptConfig = document.createElement("script");
+      scriptConfig.innerHTML = `
+      window.embeddedChatbotConfig = {
+        chatbotId: "28nNGKdoeW0eGCRMw54kM",
+        domain: "www.chatbase.co"
+      };
+    `;
+      document.body.appendChild(scriptConfig);
+
+      const scriptEmbed = document.createElement("script");
+      scriptEmbed.src = "https://www.chatbase.co/embed.min.js";
+      scriptEmbed.setAttribute("chatbotId", "28nNGKdoeW0eGCRMw54kM");
+      scriptEmbed.setAttribute("domain", "www.chatbase.co");
+      scriptEmbed.defer = true;
+      document.body.appendChild(scriptEmbed);
+
+      return () => {
+        document.body.removeChild(scriptConfig);
+        document.body.removeChild(scriptEmbed);
+      };
+    }
+  }, [location.pathname]);
 
   const handleHighlight = () => {
     const selection = window.getSelection();
