@@ -19,7 +19,7 @@ export default function Quiz() {
   const [timeLeft, setTimeLeft] = useState(
     JSON.parse(localStorage.getItem("timeLeft")) || 120
   ); // 2 minutes timer
-
+  const [currentLevel, setCurrentLevel] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "C Programming";
   const courseTopic = "functions";
@@ -69,6 +69,7 @@ export default function Quiz() {
 
     return () => clearInterval(timer);
   }, [submitted]);
+
 
   const questions = [
     {
@@ -358,7 +359,8 @@ export default function Quiz() {
 
       const data = await response.json();
       if (data.success) {
-        window.location.href = "/theend";
+        //window.location.href = "/theend";
+        alert("You have successfully completed the course!");
       } else {
         console.error("Failed to unlock next level");
       }
@@ -388,7 +390,10 @@ export default function Quiz() {
     }
   };
   const navigateToNextPage = () => {
-    window.location.href = "/theend";
+
+    //window.location.href = "/theend";
+
+    alert("You have successfully moved to next level of the course!");
   };
 
 

@@ -64,6 +64,7 @@ useEffect(() => {
       const data = await response.json();
       if (data.success) {
         window.location.href = "/variables";
+        alert("You have successfully moved to next level of the course!");
       } else {
         console.error("Failed to unlock next level");
       }

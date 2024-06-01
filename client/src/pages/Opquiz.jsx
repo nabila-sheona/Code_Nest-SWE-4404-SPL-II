@@ -19,17 +19,17 @@ export default function Quiz() {
   );
   const [timeLeft, setTimeLeft] = useState(
     JSON.parse(localStorage.getItem("timeLeft")) || 120
-  ); // 2 minutes timer  const [currentLevel, setCurrentLevel] = useState(0);
+  ); // 2 minutes timer
+
+  const [currentLevel, setCurrentLevel] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "C Programming";
   const courseTopic = "operators";
-
+  
   const fetchUserLevel = async () => {
     try {
-      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
-        currentUser.username
-      }`;
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch user level");
@@ -58,7 +58,6 @@ export default function Quiz() {
           return 0;
         }
         localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
-
         return prevTime - 1;
       });
     }, 1000);
@@ -375,6 +374,7 @@ export default function Quiz() {
       const data = await response.json();
       if (data.success) {
         window.location.href = "/conditions";
+        alert("You have successfully moved to next level of the course!");
       } else {
         console.error("Failed to unlock next level");
       }
@@ -406,6 +406,7 @@ export default function Quiz() {
   const navigateToNextPage = () => {
     window.location.href = "/conditions";
   };
+
 
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
@@ -550,14 +551,11 @@ export default function Quiz() {
           </div>
 
           {score >= 4 && (
-            <button
-              onClick={handleLevelUpdate}
-              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-            >
+            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
               Unlock Next Level
             </button>
           )}
-
+         
           <button
             onClick={() => {
               setSubmitted(false);

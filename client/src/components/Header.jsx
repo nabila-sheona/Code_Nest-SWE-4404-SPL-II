@@ -40,7 +40,7 @@ export default function Header() {
                   <ul className="absolute top-full left-0 bg-sky-800 text-sky-200 rounded shadow-md py-2">
                     <li>
                       <Link
-                        to="/c"
+                        to="/c-foreword"
                         className="block px-4 py-2 hover:bg-sky-700"
                         onClick={closeDropdown}
                       >

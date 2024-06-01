@@ -13,23 +13,23 @@ export default function Quiz() {
   const [submitted, setSubmitted] = useState(
     JSON.parse(localStorage.getItem("submitted")) || false
   );
-  const [setNextLevelUnlocked] = useState(false);
+  const [ setNextLevelUnlocked] = useState(false);
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
   const [timeLeft, setTimeLeft] = useState(
     JSON.parse(localStorage.getItem("timeLeft")) || 120
-  ); // 2 minutes timer  const [currentLevel, setCurrentLevel] = useState(0);
+  ); // 2 minutes timer
+
+  const [currentLevel, setCurrentLevel] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "C Programming";
   const courseTopic = "conditions";
-
+ 
   const fetchUserLevel = async () => {
     try {
-      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
-        currentUser.username
-      }`;
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch user level");
@@ -47,6 +47,8 @@ export default function Quiz() {
     }
   }, [currentUser, courseName]);
 
+ 
+ 
   useEffect(() => {
     if (submitted) return;
 
@@ -64,6 +66,8 @@ export default function Quiz() {
 
     return () => clearInterval(timer);
   }, [submitted]);
+
+
 
   const questions = [
     {
@@ -345,6 +349,7 @@ export default function Quiz() {
 
     if (totalScore > 3) {
       setNextLevelUnlocked(true);
+     
     }
   };
 
@@ -373,6 +378,7 @@ export default function Quiz() {
       const data = await response.json();
       if (data.success) {
         window.location.href = "/strings";
+        alert("You have successfully moved to next level of the course!");
       } else {
         console.error("Failed to unlock next level");
       }
@@ -381,9 +387,11 @@ export default function Quiz() {
     }
   };
 
+ 
   const navigateToNextPage = () => {
     window.location.href = "/strings";
   };
+
 
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
@@ -528,14 +536,11 @@ export default function Quiz() {
           </div>
 
           {score >= 4 && (
-            <button
-              onClick={handleLevelUpdate}
-              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
-            >
+            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
               Unlock Next Level
             </button>
           )}
-
+         
           <button
             onClick={() => {
               setSubmitted(false);
