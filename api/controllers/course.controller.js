@@ -49,7 +49,77 @@ export const unlockNextLevel = async (req, res, next) => {
       });
       return res.status(200).json({ success: true, message: 'Level updated to 2' });
     }
+    else if (courseTopic === 'arrays' && course.level < 3) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 3 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 3' });
+    }
+    else if (courseTopic === 'operators' && course.level < 4) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 4 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 3' });
+    }
+    else if (courseTopic === 'conditions' && course.level < 5) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 5 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 3' });
+    }
+    else if (courseTopic === 'strings' && course.level < 6) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 6 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 3' });
+    }
 
+    else if (courseTopic === 'operators' && course.level < 4) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 4 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 4' });
+    }
+    else if (courseTopic === 'conditions' && course.level < 5) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 5 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 5' });
+    }
+    else if (courseTopic === 'strings' && course.level < 6) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 6 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 6' });
+    }
+    else if (courseTopic === 'forloops' && course.level < 7) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 7 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 7' });
+    }
+    else if (courseTopic === 'whileloops' && course.level < 8) {
+      await prisma.courses.updateMany({
+        where: { username, courseName },
+        data: { level: 8 }
+      });
+      return res.status(200).json({ success: true, message: 'Level updated to 8' });
+    }
+      else if (courseTopic === 'functions' && course.level < 9) {
+        await prisma.courses.updateMany({
+          where: { username, courseName },
+          data: { level: 9 }
+        });
+        return res.status(200).json({ success: true, message: 'Level updated to 9' });
+      }
     res.status(200).json({ success: false, message: 'No update needed' });
   } catch (error) {
     console.error('Error in unlockNextLevel:', error);
