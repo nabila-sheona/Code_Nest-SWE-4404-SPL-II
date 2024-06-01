@@ -17,16 +17,19 @@ export default function Quiz() {
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes timer
-  const [currentLevel, setCurrentLevel] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(
+    JSON.parse(localStorage.getItem("timeLeft")) || 120
+  ); // 2 minutes timer  const [currentLevel, setCurrentLevel] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "C Programming";
   const courseTopic = "operators";
-  
+
   const fetchUserLevel = async () => {
     try {
-      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
+        currentUser.username
+      }`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch user level");
@@ -44,7 +47,6 @@ export default function Quiz() {
     }
   }, [currentUser, courseName]);
 
-  
   useEffect(() => {
     if (submitted) return;
 
@@ -55,29 +57,13 @@ export default function Quiz() {
           handleSubmit(true); // Auto-submit when timer reaches zero
           return 0;
         }
+        localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
+
         return prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [submitted]);
-
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (!submitted) {
-        const confirmationMessage =
-          "You can't refresh the page before finishing the quiz!";
-        e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
-        return confirmationMessage; // Gecko, WebKit, Chrome <34
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      localStorage.removeItem("timeLeft"); // Clear the timer when the component unmounts
-    };
   }, [submitted]);
 
   const questions = [
@@ -421,7 +407,6 @@ export default function Quiz() {
     window.location.href = "/conditions";
   };
 
-
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
       setSelectedOptions({
@@ -565,11 +550,14 @@ export default function Quiz() {
           </div>
 
           {score >= 4 && (
-            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
+            <button
+              onClick={handleLevelUpdate}
+              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
+            >
               Unlock Next Level
             </button>
           )}
-         
+
           <button
             onClick={() => {
               setSubmitted(false);
