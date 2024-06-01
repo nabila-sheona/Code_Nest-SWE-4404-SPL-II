@@ -1,16 +1,20 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./HelloWorld.css"; // Import CSS for styling
 import { downloadPDF } from "../utils/pdf";
 
-export default function variables() {
+export default function Variables() {
   const pdfRef = useRef();
   const [highlightedText, setHighlightedText] = useState("");
   const [highlightedRanges, setHighlightedRanges] = useState([]);
-
   const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
+  const location = useLocation();
 
   useEffect(() => {
+    const chatbotContainer = document.getElementById(
+      "chatbase-chatbot-container"
+    );
+
     if (location.pathname === "/variables") {
       const scriptConfig = document.createElement("script");
       scriptConfig.innerHTML = `
@@ -28,10 +32,22 @@ export default function variables() {
       scriptEmbed.defer = true;
       document.body.appendChild(scriptEmbed);
 
+      if (chatbotContainer) {
+        chatbotContainer.style.display = "block";
+      }
+
       return () => {
         document.body.removeChild(scriptConfig);
         document.body.removeChild(scriptEmbed);
+
+        if (chatbotContainer) {
+          chatbotContainer.style.display = "none";
+        }
       };
+    } else {
+      if (chatbotContainer) {
+        chatbotContainer.style.display = "none";
+      }
     }
   }, [location.pathname]);
 

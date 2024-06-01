@@ -16,7 +16,17 @@ export default function Quiz() {
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes timer
+  const [timeLeft, setTimeLeft] = useState(
+    JSON.parse(localStorage.getItem("timeLeft")) || 120
+  ); // 2 minutes timer
+
+  // Auto-refresh on page load only once
+  useEffect(() => {
+    if (!sessionStorage.getItem("hasRefreshed")) {
+      sessionStorage.setItem("hasRefreshed", "true");
+      window.location.reload();
+    }
+  }, []);
 
   useEffect(() => {
     if (submitted) return;
@@ -28,29 +38,12 @@ export default function Quiz() {
           handleSubmit(true); // Auto-submit when timer reaches zero
           return 0;
         }
+        localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
         return prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [submitted]);
-
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (!submitted) {
-        const confirmationMessage =
-          "You can't refresh the page before finishing the quiz!";
-        e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
-        return confirmationMessage; // Gecko, WebKit, Chrome <34
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      localStorage.removeItem("timeLeft"); // Clear the timer when the component unmounts
-    };
   }, [submitted]);
 
   const questions = [
@@ -295,7 +288,6 @@ export default function Quiz() {
       correctOption: 1,
     },
   ];
-
   const questionSets = [
     questions.slice(0, 5),
     questions.slice(5, 10),
@@ -387,6 +379,7 @@ export default function Quiz() {
     localStorage.removeItem("selectedOptions");
     localStorage.removeItem("score");
     localStorage.removeItem("submitted");
+    localStorage.removeItem("timeLeft");
 
     window.location.reload();
   };
@@ -402,7 +395,7 @@ export default function Quiz() {
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <h1 className="text-3xl font-bold mb-8 text-sky-800">
-        Quiz on Conditions
+        Quiz on Variables
       </h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
@@ -411,7 +404,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 5 questions on CONDITIONS. You{" "}
+          There are 5 questions on VARIABLES. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>

@@ -1,10 +1,9 @@
 ::selection {
-    background-color: yellow;
-    color: black;
-  }
-  .input-container {
-    background-color: darkblue;
-    padding: 8px; /* Adding padding for better appearance */
-    border-radius: 4px; /* Adding border-radius for rounded corners */
-  }
-  
+  background-color: yellow;
+  color: black;
+}
+.input-container {
+  background-color: darkblue;
+  padding: 8px; /* Adding padding for better appearance */
+  border-radius: 4px; /* Adding border-radius for rounded corners */
+}
