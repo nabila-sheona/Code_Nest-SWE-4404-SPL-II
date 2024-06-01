@@ -20,13 +20,21 @@ import PrivateRoute from "./components/PrivateRoute";
 import Arrayquiz from "./pages/Arrayquiz";
 import Operators from "./pages/Operators";
 import Opquiz from "./pages/Opquiz";
+import Conditions from "./pages/Conditions";
+import ConditionQuiz from "./pages/ConditionQuiz";
+import Strings from "./pages/Strings";
+import StringQuiz from "./pages/StringQuiz";
 import Layout from "./components/Layout";
+import ForLoop from "./pages/ForLoop";
+import ForLoopQuiz from "./pages/ForLoopQuiz";
+import While from "./pages/While";
+import WhileQuiz from "./pages/WhileQuiz";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SignUp />} />
+        <Route path="/" element={<SignIn />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route element={<Layout />}>
@@ -45,7 +53,15 @@ export default function App() {
           <Route path="/Arrayquiz" element={<Arrayquiz />} />
           <Route path="/Operators" element={<Operators />} />
           <Route path="/Opquiz" element={<Opquiz />} />
-          
+          <Route path="/conditions" element={<Conditions />} />
+          <Route path="/Conquiz" element={<ConditionQuiz />} />
+          <Route path="/strings" element={<Strings />} />
+          <Route path="/StringsQuiz" element={<StringQuiz />} />
+          <Route path="/for-loops" element={<ForLoop />} />
+          <Route path="/for-loopsQuiz" element={<ForLoopQuiz />} />
+          <Route path="/while-loops" element={<While />} />
+          <Route path="/while-loopsQuiz" element={<WhileQuiz />} />
+
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>

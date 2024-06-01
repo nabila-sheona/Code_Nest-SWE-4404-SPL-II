@@ -56,247 +56,241 @@ export default function Quiz() {
   const questions = [
     {
       id: 1,
-      question: "Which of the following correctly declares an array in C?",
+      question:
+        'What will be the output of the following code?\n\nint x = 10;\nif (x > 0) {\n    printf("x is positive");\n}',
       options: [
-        { id: 1, text: "int array[10];" },
-        { id: 2, text: "array{10};" },
-        { id: 3, text: "int array;" },
-        { id: 4, text: "array int[10];" },
+        { id: 1, text: "x is positive" },
+        { id: 2, text: "No output" },
+        { id: 3, text: "Compilation error" },
+        { id: 4, text: "x is not positive" },
       ],
       correctOption: 1,
     },
     {
       id: 2,
-      question: "How do you initialize all elements of an array to zero?",
+      question:
+        'What will be the output of the following code?\n\nint x = -10;\nif (x > 0) {\n    printf("x is positive");\n} else {\n    printf("x is not positive");\n}',
       options: [
-        { id: 1, text: "int array[10] = {0};" },
-        { id: 2, text: "int array[10] = 0;" },
-        { id: 3, text: "int array = {0};" },
-        { id: 4, text: "array[10] = {0};" },
-      ],
-      correctOption: 1,
-    },
-    {
-      id: 3,
-      question: "Which of the following accesses the last element of an array?",
-      options: [
-        { id: 1, text: "array[last];" },
-        { id: 2, text: "array[9];" },
-        { id: 3, text: "array[10];" },
-        { id: 4, text: "array[0];" },
+        { id: 1, text: "x is positive" },
+        { id: 2, text: "x is not positive" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
       correctOption: 2,
     },
     {
-      id: 4,
-      question: "How do you pass an array to a function in C?",
+      id: 3,
+      question:
+        'What will be the output of the following code?\n\nint x = 0;\nif (x > 0) {\n    printf("x is positive");\n} else if (x < 0) {\n    printf("x is negative");\n} else {\n    printf("x is zero");\n}',
       options: [
-        { id: 1, text: "func(array);" },
-        { id: 2, text: "func(&array);" },
-        { id: 3, text: "func(*array);" },
-        { id: 4, text: "func(array[]);" },
+        { id: 1, text: "x is positive" },
+        { id: 2, text: "x is negative" },
+        { id: 3, text: "x is zero" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 1,
+      correctOption: 3,
+    },
+    {
+      id: 4,
+      question:
+        'What will be the output of the following code?\n\nint day = 4;\nswitch (day) {\n    case 1:\n        printf("Monday");\n        break;\n    case 2:\n        printf("Tuesday");\n        break;\n    case 3:\n        printf("Wednesday");\n        break;\n    case 4:\n        printf("Thursday");\n        break;\n    case 5:\n        printf("Friday");\n        break;\n    case 6:\n        printf("Saturday");\n        break;\n    case 7:\n        printf("Sunday");\n        break;\n    default:\n        printf("Invalid day");\n}',
+      options: [
+        { id: 1, text: "Monday" },
+        { id: 2, text: "Invalid day" },
+        { id: 3, text: "Thursday" },
+        { id: 4, text: "Sunday" },
+      ],
+      correctOption: 3,
     },
     {
       id: 5,
-      question: "What is the index of the first element in an array?",
+      question:
+        'What will be the output of the following code?\n\nint x = 5;\nint y = 10;\nif (x > 0 && y > 0) {\n    printf("Both x and y are positive");\n}',
       options: [
-        { id: 1, text: "1" },
-        { id: 2, text: "0" },
-        { id: 3, text: "-1" },
-        { id: 4, text: "2" },
+        { id: 1, text: "No output" },
+        { id: 2, text: "Both x and y are positive" },
+        { id: 3, text: "Compilation error" },
+        { id: 4, text: "x is positive" },
       ],
       correctOption: 2,
     },
     {
       id: 6,
       question:
-        "Which of the following correctly declares a multi-dimensional array?",
+        'What will be the output of the following code?\n\nint x = 5;\nint y = 10;\nif (x > 0 || y < 0) {\n    printf("At least one of x or y is positive");\n}',
       options: [
-        { id: 1, text: "int array[5][5];" },
-        { id: 2, text: "int array[5,5];" },
-        { id: 3, text: "array int[5][5];" },
-        { id: 4, text: "int array{5}{5};" },
+        { id: 1, text: "No output" },
+        { id: 2, text: "Both x and y are positive" },
+        { id: 3, text: "At least one of x or y is positive" },
+        { id: 4, text: "x is positive" },
       ],
-      correctOption: 1,
+      correctOption: 3,
     },
     {
       id: 7,
       question:
-        "How do you access the element in the 3rd row and 2nd column of a 2D array?",
+        'What will be the output of the following code?\n\nint x = -5;\nif (!(x < 0)) {\n    printf("x is not negative");\n} else {\n    printf("x is negative");\n}',
       options: [
-        { id: 1, text: "array[2][1];" },
-        { id: 2, text: "array[3][2];" },
-        { id: 3, text: "array[1][2];" },
-        { id: 4, text: "array[2][3];" },
+        { id: 1, text: "x is negative" },
+        { id: 2, text: "x is not negative" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
       correctOption: 1,
     },
     {
       id: 8,
       question:
-        "Which of the following is a valid way to initialize a 2D array?",
+        'What will be the output of the following code?\n\nint x = 5;\nif (x > 10) {\n    printf("x is greater than 10");\n} else {\n    printf("x is not greater than 10");\n}',
       options: [
-        { id: 1, text: "int array[2][2] = {{1, 2}, {3, 4}};" },
-        { id: 2, text: "int array[2][2] = [1, 2, 3, 4];" },
-        { id: 3, text: "int array[2][2] = {1, 2, 3, 4};" },
-        { id: 4, text: "int array[2][2] = {{1, 2}, {3, 4},};" },
+        { id: 1, text: "x is greater than 10" },
+        { id: 2, text: "x is not greater than 10" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
+      ],
+      correctOption: 2,
+    },
+    {
+      id: 9,
+      question:
+        'What will be the output of the following code?\n\nint x = 5;\nif (x == 5) {\n    printf("x is 5");\n} else {\n    printf("x is not 5");\n}',
+      options: [
+        { id: 1, text: "x is 5" },
+        { id: 2, text: "x is not 5" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
       correctOption: 1,
     },
     {
-      id: 9,
-      question: "Which of the following is not a valid array operation?",
-      options: [
-        { id: 1, text: "array[1] = 10;" },
-        { id: 2, text: "array[2] = array[1] + 1;" },
-        { id: 3, text: "array[3] = ++array[2];" },
-        { id: 4, text: "array = array + 1;" },
-      ],
-      correctOption: 4,
-    },
-    {
       id: 10,
-      question: "How do you find the length of an array in C?",
+      question:
+        'What will be the output of the following code?\n\nint x = 5;\nif (x != 5) {\n    printf("x is not 5");\n} else {\n    printf("x is 5");\n}',
       options: [
-        { id: 1, text: "sizeof(array);" },
-        { id: 2, text: "sizeof(array)/sizeof(array[0]);" },
-        { id: 3, text: "length(array);" },
-        { id: 4, text: "array.length;" },
+        { id: 1, text: "x is not 5" },
+        { id: 2, text: "x is 5" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
       correctOption: 2,
     },
     {
       id: 11,
       question:
-        "Which of the following statements is correct about arrays in C?",
+        'What will be the output of the following code?\n\nint day = 7;\nswitch (day) {\n    case 1:\n        printf("Monday");\n        break;\n    case 2:\n        printf("Tuesday");\n        break;\n    case 3:\n        printf("Wednesday");\n        break;\n    case 4:\n        printf("Thursday");\n        break;\n    case 5:\n        printf("Friday");\n        break;\n    case 6:\n        printf("Saturday");\n        break;\n    case 7:\n        printf("Sunday");\n        break;\n    default:\n        printf("Invalid day");\n}',
       options: [
-        {
-          id: 1,
-          text: "Array elements are stored in contiguous memory locations.",
-        },
-        { id: 2, text: "Array elements can have different data types." },
-        { id: 3, text: "The size of an array must be declared at runtime." },
-        {
-          id: 4,
-          text: "You cannot initialize an array at the time of declaration.",
-        },
+        { id: 1, text: "Invalid day" },
+        { id: 2, text: "Sunday" },
+        { id: 3, text: "Saturday" },
+        { id: 4, text: "Monday" },
       ],
-      correctOption: 1,
+      correctOption: 2,
     },
     {
       id: 12,
-      question: "How do you dynamically allocate memory for an array in C?",
+      question:
+        'What will be the output of the following code?\n\nint x = 10;\nif (x >= 10) {\n    printf("x is 10 or more");\n}',
       options: [
-        { id: 1, text: "int* array = malloc(10 * sizeof(int));" },
-        { id: 2, text: "int array[10] = malloc(10 * sizeof(int));" },
-        { id: 3, text: "int* array = malloc(10);" },
-        { id: 4, text: "int* array = malloc(10 * int);" },
+        { id: 1, text: "x is 10 or more" },
+        { id: 2, text: "No output" },
+        { id: 3, text: "Compilation error" },
+        { id: 4, text: "x is less than 10" },
       ],
       correctOption: 1,
     },
     {
       id: 13,
       question:
-        "How do you free dynamically allocated memory for an array in C?",
+        'What will be the output of the following code?\n\nint x = 10;\nif (x <= 10) {\n    printf("x is 10 or less");\n}',
       options: [
-        { id: 1, text: "delete(array);" },
-        { id: 2, text: "free(array);" },
-        { id: 3, text: "clear(array);" },
-        { id: 4, text: "remove(array);" },
+        { id: 1, text: "x is 10 or less" },
+        { id: 2, text: "No output" },
+        { id: 3, text: "Compilation error" },
+        { id: 4, text: "x is more than 10" },
+      ],
+      correctOption: 1,
+    },
+    {
+      id: 14,
+      question:
+        'What will be the output of the following code?\n\nint x = 5;\nint y = 10;\nif (x > 0 && y < 0) {\n    printf("x is positive and y is negative");\n} else {\n    printf("x and y are not both positive and negative");\n}',
+      options: [
+        { id: 1, text: "x is positive and y is negative" },
+        { id: 2, text: "x and y are not both positive and negative" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
       correctOption: 2,
     },
     {
-      id: 14,
-      question: "What will happen if you access an array out of bounds in C?",
-      options: [
-        { id: 1, text: "It will result in a compile-time error." },
-        { id: 2, text: "It will return a default value." },
-        { id: 3, text: "It may result in undefined behavior." },
-        { id: 4, text: "It will raise an exception." },
-      ],
-      correctOption: 3,
-    },
-    {
       id: 15,
       question:
-        "Which of the following correctly assigns a value to an array element?",
+        'What will be the output of the following code?\n\nint x = 5;\nint y = 10;\nif (x > 0 || y < 0) {\n    printf("x is positive or y is negative");\n}',
       options: [
-        { id: 1, text: "array[3] = 10;" },
-        { id: 2, text: "array(3) = 10;" },
-        { id: 3, text: "array[3] == 10;" },
-        { id: 4, text: "array = 10[3];" },
+        { id: 1, text: "x is positive or y is negative" },
+        { id: 2, text: "No output" },
+        { id: 3, text: "Compilation error" },
+        { id: 4, text: "x and y are both positive" },
       ],
       correctOption: 1,
     },
     {
       id: 16,
-      question: "Which of the following is true about arrays in C?",
+      question:
+        'What will be the output of the following code?\n\nint x = 5;\nint y = 10;\nif (!(x > 0)) {\n    printf("x is not positive");\n} else {\n    printf("x is positive");\n}',
       options: [
-        { id: 1, text: "Arrays can be resized after declaration." },
-        { id: 2, text: "Arrays start with index 1." },
-        { id: 3, text: "Arrays can store multiple data types." },
-        { id: 4, text: "Arrays have fixed size." },
+        { id: 1, text: "x is positive" },
+        { id: 2, text: "x is not positive" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
-      correctOption: 4,
+      correctOption: 1,
     },
     {
       id: 17,
-      question: "How do you copy the contents of one array to another in C?",
+      question:
+        'What will be the output of the following code?\n\nint x = 0;\nif (x > 0) {\n    printf("x is positive");\n} else if (x == 0) {\n    printf("x is zero");\n} else {\n    printf("x is negative");\n}',
       options: [
-        { id: 1, text: "array2 = array1;" },
-        { id: 2, text: "memcpy(array2, array1, sizeof(array1));" },
-        { id: 3, text: "copy(array2, array1);" },
-        { id: 4, text: "array2 = array1.copy();" },
+        { id: 1, text: "x is positive" },
+        { id: 2, text: "x is zero" },
+        { id: 3, text: "x is negative" },
+        { id: 4, text: "No output" },
       ],
       correctOption: 2,
     },
     {
       id: 18,
       question:
-        'What is the output of the following code?\nint array[5] = {1, 2, 3, 4, 5};\nprintf("%d", array[2]);',
+        'What will be the output of the following code?\n\nint x = 1;\nswitch (x) {\n    case 1:\n        printf("One");\n        break;\n    case 2:\n        printf("Two");\n        break;\n    default:\n        printf("Other");\n}',
       options: [
-        { id: 1, text: "1" },
-        { id: 2, text: "2" },
-        { id: 3, text: "3" },
-        { id: 4, text: "4" },
+        { id: 1, text: "One" },
+        { id: 2, text: "Two" },
+        { id: 3, text: "Other" },
+        { id: 4, text: "No output" },
+      ],
+      correctOption: 1,
+    },
+    {
+      id: 19,
+      question:
+        'What will be the output of the following code?\n\nint x = 3;\nswitch (x) {\n    case 1:\n        printf("One");\n        break;\n    case 2:\n        printf("Two");\n        break;\n    default:\n        printf("Other");\n}',
+      options: [
+        { id: 1, text: "One" },
+        { id: 2, text: "Two" },
+        { id: 3, text: "Other" },
+        { id: 4, text: "No output" },
       ],
       correctOption: 3,
     },
     {
-      id: 19,
-      question: "What is the correct way to declare a pointer to an array?",
-      options: [
-        { id: 1, text: "int* array;" },
-        { id: 2, text: "int array*;" },
-        { id: 3, text: "int* array[10];" },
-        { id: 4, text: "int (*array)[10];" },
-      ],
-      correctOption: 4,
-    },
-    {
       id: 20,
       question:
-        "Which of the following will correctly print all elements of an array?",
+        'What will be the output of the following code?\n\nint x = 5;\nif (x > 0 && x < 10) {\n    printf("x is between 0 and 10");\n} else {\n    printf("x is not between 0 and 10");\n}',
       options: [
-        {
-          id: 1,
-          text: 'for (int i = 0; i < 10; i++) { printf("%d", array[i]); }',
-        },
-        {
-          id: 2,
-          text: 'for (int i = 0; i <= 10; i++) { printf("%d", array[i]); }',
-        },
-        {
-          id: 3,
-          text: 'for (int i = 1; i < 10; i++) { printf("%d", array[i]); }',
-        },
-        {
-          id: 4,
-          text: 'for (int i = 1; i <= 10; i++) { printf("%d", array[i]); }',
-        },
+        { id: 1, text: "x is between 0 and 10" },
+        { id: 2, text: "x is not between 0 and 10" },
+        { id: 3, text: "No output" },
+        { id: 4, text: "Compilation error" },
       ],
       correctOption: 1,
     },
@@ -407,7 +401,9 @@ export default function Quiz() {
 
   return (
     <div className="flex justify-center items-center flex-col h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Arrays</h1>
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">
+        Quiz on Conditions
+      </h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
           Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
@@ -415,8 +411,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 20 questions on ARRAYS divided into 4 sets of 5 questions
-          each. You{" "}
+          There are 5 questions on CONDITIONS. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>
@@ -507,7 +502,7 @@ export default function Quiz() {
 
           {score === 5 && (
             <Link
-              to="/operators"
+              to="/strings"
               className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
             >
               Go to the Next Level
@@ -516,7 +511,7 @@ export default function Quiz() {
           {score >= 3 && nextLevelUnlocked && score < 5 && (
             <button>
               <Link
-                to="/operators"
+                to="/strings"
                 className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
               >
                 Go to the Next Level

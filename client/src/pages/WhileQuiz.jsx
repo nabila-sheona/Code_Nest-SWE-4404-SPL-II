@@ -49,254 +49,271 @@ export default function Quiz() {
 
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      localStorage.removeItem("timeLeft"); // Clear the timer when the component unmounts
     };
   }, [submitted]);
 
   const questions = [
     {
       id: 1,
-      question: "Which of the following correctly declares an array in C?",
+      question:
+        "What is the correct syntax of a while loop in C?\n\nOptions:\n1. while (condition) { // statements }\n2. while condition { // statements }\n3. while condition: // statements\n4. while (condition): // statements",
       options: [
-        { id: 1, text: "int array[10];" },
-        { id: 2, text: "array{10};" },
-        { id: 3, text: "int array;" },
-        { id: 4, text: "array int[10];" },
+        { id: 1, text: "while (condition) { // statements }" },
+        { id: 2, text: "while condition { // statements }" },
+        { id: 3, text: "while condition: // statements" },
+        { id: 4, text: "while (condition): // statements" },
       ],
       correctOption: 1,
     },
     {
       id: 2,
-      question: "How do you initialize all elements of an array to zero?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count <= 5) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "int array[10] = {0};" },
-        { id: 2, text: "int array[10] = 0;" },
-        { id: 3, text: "int array = {0};" },
-        { id: 4, text: "array[10] = {0};" },
+        { id: 1, text: "Count: 1\nCount: 2\nCount: 3\nCount: 4\nCount: 5" },
+        { id: 2, text: "Count: 1\nCount: 2\nCount: 3\nCount: 4" },
+        {
+          id: 3,
+          text: "Count: 1\nCount: 2\nCount: 3\nCount: 4\nCount: 5\nCount: 6",
+        },
+        { id: 4, text: "No output" },
       ],
       correctOption: 1,
     },
     {
       id: 3,
-      question: "Which of the following accesses the last element of an array?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count < 3) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "array[last];" },
-        { id: 2, text: "array[9];" },
-        { id: 3, text: "array[10];" },
-        { id: 4, text: "array[0];" },
+        { id: 1, text: "Count: 1\nCount: 2" },
+        { id: 2, text: "Count: 1\nCount: 2\nCount: 3" },
+        { id: 3, text: "Count: 0\nCount: 1\nCount: 2" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 2,
+      correctOption: 1,
     },
     {
       id: 4,
-      question: "How do you pass an array to a function in C?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 5;\n    while (count > 0) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "func(array);" },
-        { id: 2, text: "func(&array);" },
-        { id: 3, text: "func(*array);" },
-        { id: 4, text: "func(array[]);" },
+        { id: 1, text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1" },
+        {
+          id: 2,
+          text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0",
+        },
+        { id: 3, text: "Count: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 4, text: "No output" },
       ],
       correctOption: 1,
     },
     {
       id: 5,
-      question: "What is the index of the first element in an array?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count < 1) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "1" },
-        { id: 2, text: "0" },
-        { id: 3, text: "-1" },
-        { id: 4, text: "2" },
+        { id: 1, text: "Count: 1" },
+        { id: 2, text: "Count: 1\nCount: 2" },
+        { id: 3, text: "Count: 1\nCount: 2\nCount: 3" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 2,
+      correctOption: 4,
     },
     {
       id: 6,
       question:
-        "Which of the following correctly declares a multi-dimensional array?",
+        'What is the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 5;\n    while (count <= 5 && count > 0) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "int array[5][5];" },
-        { id: 2, text: "int array[5,5];" },
-        { id: 3, text: "array int[5][5];" },
-        { id: 4, text: "int array{5}{5};" },
+        { id: 1, text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1" },
+        {
+          id: 2,
+          text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0",
+        },
+        { id: 3, text: "Count: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 4, text: "No output" },
       ],
       correctOption: 1,
     },
     {
       id: 7,
       question:
-        "How do you access the element in the 3rd row and 2nd column of a 2D array?",
+        'What is the condition that causes the while loop to terminate in the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count <= 5) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "array[2][1];" },
-        { id: 2, text: "array[3][2];" },
-        { id: 3, text: "array[1][2];" },
-        { id: 4, text: "array[2][3];" },
+        { id: 1, text: "count == 5" },
+        { id: 2, text: "count < 5" },
+        { id: 3, text: "count > 5" },
+        { id: 4, text: "count <= 5" },
       ],
-      correctOption: 1,
+      correctOption: 3,
     },
     {
       id: 8,
       question:
-        "Which of the following is a valid way to initialize a 2D array?",
+        "Which of the following is true about the while loop?\n\nOptions:\n1. The initialization must be done before the loop starts\n2. The condition is checked after each iteration\n3. The increment/decrement is done at the end of the loop body\n4. It is used when the number of iterations is known beforehand",
       options: [
-        { id: 1, text: "int array[2][2] = {{1, 2}, {3, 4}};" },
-        { id: 2, text: "int array[2][2] = [1, 2, 3, 4];" },
-        { id: 3, text: "int array[2][2] = {1, 2, 3, 4};" },
-        { id: 4, text: "int array[2][2] = {{1, 2}, {3, 4},};" },
+        {
+          id: 1,
+          text: "The initialization must be done before the loop starts",
+        },
+        { id: 2, text: "The condition is checked after each iteration" },
+        {
+          id: 3,
+          text: "The increment/decrement is done at the end of the loop body",
+        },
+        {
+          id: 4,
+          text: "It is used when the number of iterations is known beforehand",
+        },
       ],
       correctOption: 1,
     },
     {
       id: 9,
-      question: "Which of the following is not a valid array operation?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 5;\n    while (count >= 1) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "array[1] = 10;" },
-        { id: 2, text: "array[2] = array[1] + 1;" },
-        { id: 3, text: "array[3] = ++array[2];" },
-        { id: 4, text: "array = array + 1;" },
+        { id: 1, text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1" },
+        {
+          id: 2,
+          text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0",
+        },
+        { id: 3, text: "Count: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 4,
+      correctOption: 1,
     },
     {
       id: 10,
-      question: "How do you find the length of an array in C?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 3;\n    while (count > 0) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "sizeof(array);" },
-        { id: 2, text: "sizeof(array)/sizeof(array[0]);" },
-        { id: 3, text: "length(array);" },
-        { id: 4, text: "array.length;" },
+        { id: 1, text: "Count: 3\nCount: 2\nCount: 1" },
+        { id: 2, text: "Count: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 3, text: "Count: 2\nCount: 1\nCount: 0" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 2,
+      correctOption: 1,
     },
     {
       id: 11,
       question:
-        "Which of the following statements is correct about arrays in C?",
+        'What is the correct syntax for a while loop that runs as long as variable "a" is less than 10?\n\nOptions:\n1. while (a < 10) { // statements }\n2. while a < 10 { // statements }\n3. while (a < 10): // statements\n4. while (a < 10); { // statements }',
       options: [
-        {
-          id: 1,
-          text: "Array elements are stored in contiguous memory locations.",
-        },
-        { id: 2, text: "Array elements can have different data types." },
-        { id: 3, text: "The size of an array must be declared at runtime." },
-        {
-          id: 4,
-          text: "You cannot initialize an array at the time of declaration.",
-        },
+        { id: 1, text: "while (a < 10) { // statements }" },
+        { id: 2, text: "while a < 10 { // statements }" },
+        { id: 3, text: "while (a < 10): // statements" },
+        { id: 4, text: "while (a < 10); { // statements }" },
       ],
       correctOption: 1,
     },
     {
       id: 12,
-      question: "How do you dynamically allocate memory for an array in C?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count < 1) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "int* array = malloc(10 * sizeof(int));" },
-        { id: 2, text: "int array[10] = malloc(10 * sizeof(int));" },
-        { id: 3, text: "int* array = malloc(10);" },
-        { id: 4, text: "int* array = malloc(10 * int);" },
+        { id: 1, text: "Count: 1" },
+        { id: 2, text: "Count: 1\nCount: 2" },
+        { id: 3, text: "Count: 1\nCount: 2\nCount: 3" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 1,
+      correctOption: 4,
     },
     {
       id: 13,
       question:
-        "How do you free dynamically allocated memory for an array in C?",
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 2;\n    while (count <= 4) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "delete(array);" },
-        { id: 2, text: "free(array);" },
-        { id: 3, text: "clear(array);" },
-        { id: 4, text: "remove(array);" },
+        { id: 1, text: "Count: 2\nCount: 3\nCount: 4" },
+        { id: 2, text: "Count: 2\nCount: 3\nCount: 4\nCount: 5" },
+        { id: 3, text: "Count: 1\nCount: 2\nCount: 3\nCount: 4" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 2,
+      correctOption: 1,
     },
     {
       id: 14,
-      question: "What will happen if you access an array out of bounds in C?",
+      question:
+        'What is the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 5;\n    while (count > 5) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "It will result in a compile-time error." },
-        { id: 2, text: "It will return a default value." },
-        { id: 3, text: "It may result in undefined behavior." },
-        { id: 4, text: "It will raise an exception." },
+        { id: 1, text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1" },
+        {
+          id: 2,
+          text: "Count: 5\nCount: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0",
+        },
+        { id: 3, text: "Count: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 3,
+      correctOption: 4,
     },
     {
       id: 15,
       question:
-        "Which of the following correctly assigns a value to an array element?",
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count <= 3) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "array[3] = 10;" },
-        { id: 2, text: "array(3) = 10;" },
-        { id: 3, text: "array[3] == 10;" },
-        { id: 4, text: "array = 10[3];" },
+        { id: 1, text: "Count: 1\nCount: 2\nCount: 3" },
+        { id: 2, text: "Count: 1\nCount: 2\nCount: 3\nCount: 4" },
+        { id: 3, text: "Count: 0\nCount: 1\nCount: 2\nCount: 3" },
+        { id: 4, text: "No output" },
       ],
       correctOption: 1,
     },
     {
       id: 16,
-      question: "Which of the following is true about arrays in C?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 4;\n    while (count > 0) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "Arrays can be resized after declaration." },
-        { id: 2, text: "Arrays start with index 1." },
-        { id: 3, text: "Arrays can store multiple data types." },
-        { id: 4, text: "Arrays have fixed size." },
+        { id: 1, text: "Count: 4\nCount: 3\nCount: 2\nCount: 1" },
+        { id: 2, text: "Count: 4\nCount: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 3, text: "Count: 3\nCount: 2\nCount: 1\nCount: 0" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 4,
+      correctOption: 1,
     },
     {
       id: 17,
-      question: "How do you copy the contents of one array to another in C?",
+      question:
+        'What is the condition that causes the while loop to terminate in the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 3;\n    while (count > 0) {\n        printf("Count: %d\\n", count);\n        count--;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "array2 = array1;" },
-        { id: 2, text: "memcpy(array2, array1, sizeof(array1));" },
-        { id: 3, text: "copy(array2, array1);" },
-        { id: 4, text: "array2 = array1.copy();" },
+        { id: 1, text: "count == 0" },
+        { id: 2, text: "count < 0" },
+        { id: 3, text: "count > 0" },
+        { id: 4, text: "count <= 0" },
       ],
-      correctOption: 2,
+      correctOption: 4,
     },
     {
       id: 18,
       question:
-        'What is the output of the following code?\nint array[5] = {1, 2, 3, 4, 5};\nprintf("%d", array[2]);',
+        'What is the correct syntax for a while loop that runs as long as variable "a" is greater than 0?\n\nOptions:\n1. while (a > 0) { // statements }\n2. while a > 0 { // statements }\n3. while (a > 0): // statements\n4. while (a > 0); { // statements }',
       options: [
-        { id: 1, text: "1" },
-        { id: 2, text: "2" },
-        { id: 3, text: "3" },
-        { id: 4, text: "4" },
+        { id: 1, text: "while (a > 0) { // statements }" },
+        { id: 2, text: "while a > 0 { // statements }" },
+        { id: 3, text: "while (a > 0): // statements" },
+        { id: 4, text: "while (a > 0); { // statements }" },
       ],
-      correctOption: 3,
+      correctOption: 1,
     },
     {
       id: 19,
-      question: "What is the correct way to declare a pointer to an array?",
+      question:
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 2;\n    while (count <= 4) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        { id: 1, text: "int* array;" },
-        { id: 2, text: "int array*;" },
-        { id: 3, text: "int* array[10];" },
-        { id: 4, text: "int (*array)[10];" },
+        { id: 1, text: "Count: 2\nCount: 3\nCount: 4" },
+        { id: 2, text: "Count: 2\nCount: 3\nCount: 4\nCount: 5" },
+        { id: 3, text: "Count: 1\nCount: 2\nCount: 3\nCount: 4" },
+        { id: 4, text: "No output" },
       ],
-      correctOption: 4,
+      correctOption: 1,
     },
     {
       id: 20,
       question:
-        "Which of the following will correctly print all elements of an array?",
+        'What will be the output of the following code?\n\n#include <stdio.h>\n\nint main() {\n    int count = 1;\n    while (count <= 3) {\n        printf("Count: %d\\n", count);\n        count++;\n    }\n    return 0;\n}',
       options: [
-        {
-          id: 1,
-          text: 'for (int i = 0; i < 10; i++) { printf("%d", array[i]); }',
-        },
-        {
-          id: 2,
-          text: 'for (int i = 0; i <= 10; i++) { printf("%d", array[i]); }',
-        },
-        {
-          id: 3,
-          text: 'for (int i = 1; i < 10; i++) { printf("%d", array[i]); }',
-        },
-        {
-          id: 4,
-          text: 'for (int i = 1; i <= 10; i++) { printf("%d", array[i]); }',
-        },
+        { id: 1, text: "Count: 1\nCount: 2\nCount: 3" },
+        { id: 2, text: "Count: 1\nCount: 2\nCount: 3\nCount: 4" },
+        { id: 3, text: "Count: 0\nCount: 1\nCount: 2\nCount: 3" },
+        { id: 4, text: "No output" },
       ],
       correctOption: 1,
     },
@@ -407,7 +424,9 @@ export default function Quiz() {
 
   return (
     <div className="flex justify-center items-center flex-col h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Arrays</h1>
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">
+        Quiz on While Loops
+      </h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
           Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
@@ -415,8 +434,8 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 20 questions on ARRAYS divided into 4 sets of 5 questions
-          each. You{" "}
+          There are 20 questions on WHILE LOOPS divided into 4 sets of 5
+          questions each. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>
@@ -507,7 +526,7 @@ export default function Quiz() {
 
           {score === 5 && (
             <Link
-              to="/operators"
+              to="/functions"
               className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
             >
               Go to the Next Level
@@ -516,7 +535,7 @@ export default function Quiz() {
           {score >= 3 && nextLevelUnlocked && score < 5 && (
             <button>
               <Link
-                to="/operators"
+                to="/functions"
                 className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
               >
                 Go to the Next Level

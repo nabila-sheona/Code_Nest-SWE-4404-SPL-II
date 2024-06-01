@@ -229,7 +229,7 @@ export default function Arrayquiz() {
           ))}
           {score === 5 && (
             <Link
-              to="/operators"
+              to="/conditions"
               className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
             >
               Go to the Next Level
@@ -238,7 +238,7 @@ export default function Arrayquiz() {
           {score >= 3 && nextLevelUnlocked && score < 5 && (
             <button>
               <Link
-                to="/operators"
+                to="/conditions"
                 className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
               >
                 Go to the Next Level
