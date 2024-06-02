@@ -56,27 +56,6 @@ export const unlockNextLevel = async (req, res, next) => {
       });
       return res.status(200).json({ success: true, message: 'Level updated to 3' });
     }
-    else if (courseTopic === 'operators' && course.level < 4) {
-      await prisma.courses.updateMany({
-        where: { username, courseName },
-        data: { level: 4 }
-      });
-      return res.status(200).json({ success: true, message: 'Level updated to 3' });
-    }
-    else if (courseTopic === 'conditions' && course.level < 5) {
-      await prisma.courses.updateMany({
-        where: { username, courseName },
-        data: { level: 5 }
-      });
-      return res.status(200).json({ success: true, message: 'Level updated to 3' });
-    }
-    else if (courseTopic === 'strings' && course.level < 6) {
-      await prisma.courses.updateMany({
-        where: { username, courseName },
-        data: { level: 6 }
-      });
-      return res.status(200).json({ success: true, message: 'Level updated to 3' });
-    }
 
     else if (courseTopic === 'operators' && course.level < 4) {
       await prisma.courses.updateMany({
@@ -130,19 +109,15 @@ export const unlockNextLevel = async (req, res, next) => {
 
 export const checkRegistration = async (req, res, next) => {
   const { username } = req.params;
-  const courseName = 'C Programming'; // This can be dynamic if you have multiple courses
+  const { courseName } = req.query; // or req.body if you send it in the body
 
   try {
-    const { courseName, username, level, hasStarted } = req.body;
-
-    // Check if the course registration already exists
-    const existingCourse = await Course.findOne(username);
+    // Check if the course registration already exists for the user
+    const existingCourse = await Course.findOne({ username, courseName });
     if (existingCourse) {
-      res.json({ hasStarted: true });
-      return true;
+      res.json({ isRegistered: true });
     } else {
-      res.json({ hasStarted: false });
-      return false;
+      res.json({ isRegistered: false });
     }
   } catch (error) {
     next(error);
