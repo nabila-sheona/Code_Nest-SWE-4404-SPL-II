@@ -2,29 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function Quiz() {
+export default function ArrayQuizCpp() {
   const [selectedOptions, setSelectedOptions] = useState(
-    JSON.parse(localStorage.getItem("selectedOptions")) || {}
+    JSON.parse(localStorage.getItem("selectedOptionsArrayCpp")) || {}
   );
   const [score, setScore] = useState(
-    JSON.parse(localStorage.getItem("score")) || 0
+    JSON.parse(localStorage.getItem("scoreArrayCpp")) || 0
   );
   const [showFeedback, setShowFeedback] = useState(false);
   const [submitted, setSubmitted] = useState(
-    JSON.parse(localStorage.getItem("submitted")) || false
+    JSON.parse(localStorage.getItem("submittedArrayCpp")) || false
   );
   const [nextLevelUnlocked, setNextLevelUnlocked] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "Cpp";
-  const courseTopic = "variables";
+  const courseTopic = "arrayquiz";
 
   const [currentSet, setCurrentSet] = useState(
-    JSON.parse(localStorage.getItem("currentSet")) || 1
+    JSON.parse(localStorage.getItem("currentSetArrayCpp")) || 1
   );
   const [timeLeft, setTimeLeft] = useState(
-    JSON.parse(localStorage.getItem("timeLeft")) || 120
+    JSON.parse(localStorage.getItem("timeLeftArrayCpp")) || 120
   ); // 2 minutes timer
   const fetchUserLevel = async () => {
     try {
@@ -58,7 +58,7 @@ export default function Quiz() {
           handleSubmit(true); // Auto-submit when timer reaches zero
           return 0;
         }
-        localStorage.setItem("timeLeft", JSON.stringify(prevTime - 1));
+        localStorage.setItem("timeLeftArrayCpp", JSON.stringify(prevTime - 1));
         return prevTime - 1;
       });
     }, 1000);
@@ -70,235 +70,121 @@ export default function Quiz() {
     {
       id: 1,
       question:
-        "Which of the following is NOT a valid uppercase alphabet in the C language?",
+        "Which of the following is the correct way to declare an array in C++?",
       options: [
-        { id: 1, text: "W" },
-        { id: 2, text: "P" },
-        { id: 3, text: "O" },
-        { id: 4, text: "q" },
+        { id: 1, text: "int array[10];" },
+        { id: 2, text: "int array;" },
+        { id: 3, text: "array[10] int;" },
+        { id: 4, text: "array int[10];" },
       ],
-      correctOption: 4,
+      correctOption: 1,
     },
     {
       id: 2,
-      question:
-        "Which of the following special characters is NOT allowed in C identifiers?",
+      question: "What is the index of the first element in an array in C++?",
       options: [
-        { id: 1, text: "_" },
-        { id: 2, text: "$" },
-        { id: 3, text: "&" },
-        { id: 4, text: "+" },
+        { id: 1, text: "1" },
+        { id: 2, text: "0" },
+        { id: 3, text: "-1" },
+        { id: 4, text: "Depends on the array size" },
       ],
-      correctOption: 4,
+      correctOption: 2,
     },
     {
       id: 3,
-      question:
-        "Which character set does C accept for both variables and functions?",
+      question: "How do you access the 5th element in an array named 'arr'?",
       options: [
-        { id: 1, text: "Uppercase letters only" },
-        { id: 2, text: " Lowercase letters only" },
-        { id: 3, text: "Both uppercase and lowercase letters" },
-        { id: 4, text: " Special characters only" },
+        { id: 1, text: "arr[5]" },
+        { id: 2, text: "arr[4]" },
+        { id: 3, text: "arr(5)" },
+        { id: 4, text: "arr{5}" },
       ],
-      correctOption: 3,
+      correctOption: 2,
     },
     {
       id: 4,
-      question: "What is the character set for digits in the C language?",
+      question:
+        "Which of the following correctly initializes an array of 5 integers to 0?",
       options: [
-        { id: 1, text: "0-8" },
-        { id: 2, text: "1-9" },
-        { id: 3, text: "0-9" },
-        { id: 4, text: "1-8" },
+        { id: 1, text: "int array[5] = {0};" },
+        { id: 2, text: "int array[5] = 0;" },
+        { id: 3, text: "int array[5] = {0,0,0,0,0};" },
+        { id: 4, text: "int array = {0};" },
       ],
-      correctOption: 3,
+      correctOption: 1,
     },
     {
       id: 5,
-      question: "Which of the following is a C keyword?",
+      question:
+        'What is the output of the following code?\n\nint arr[3] = {1, 2, 3};\nprintf("%d", arr[1]);',
       options: [
-        { id: 1, text: "Print" },
-        { id: 2, text: "For" },
-        { id: 3, text: "Var" },
-        { id: 4, text: "Begin" },
+        { id: 1, text: "1" },
+        { id: 2, text: "2" },
+        { id: 3, text: "3" },
+        { id: 4, text: "Garbage value" },
       ],
       correctOption: 2,
     },
     {
       id: 6,
-      question: "Which of the following is NOT a valid variable name in C?",
+      question: "How do you determine the size of an array in C++?",
       options: [
-        { id: 1, text: "variable1" },
-        { id: 2, text: "1variable" },
-        { id: 3, text: "_variable" },
-        { id: 4, text: "variable_" },
-      ],
-      correctOption: 2,
-    },
-    {
-      id: 7,
-      question: "Which of the following is used to define a constant in C?",
-      options: [
-        { id: 1, text: "#define" },
-        { id: 2, text: "constant" },
-        { id: 3, text: "final" },
-        { id: 4, text: "const" },
+        { id: 1, text: "sizeof(array)" },
+        { id: 2, text: "length(array)" },
+        { id: 3, text: "array.size()" },
+        { id: 4, text: "size(array)" },
       ],
       correctOption: 1,
     },
     {
-      id: 8,
-      question: "Which of the following is not a storage class specifier in C?",
+      id: 7,
+      question: "What will happen if you access an array out of its bounds?",
       options: [
-        { id: 1, text: "auto" },
-        { id: 2, text: "register" },
-        { id: 3, text: "static" },
-        { id: 4, text: "public" },
+        { id: 1, text: "Compile-time error" },
+        { id: 2, text: "Runtime error" },
+        { id: 3, text: "Undefined behavior" },
+        { id: 4, text: "Nothing" },
       ],
-      correctOption: 4,
+      correctOption: 3,
+    },
+    {
+      id: 8,
+      question:
+        "Which of the following is the correct way to declare a multidimensional array?",
+      options: [
+        { id: 1, text: "int array[10][10];" },
+        { id: 2, text: "int array[10,10];" },
+        { id: 3, text: "array[10][10] int;" },
+        { id: 4, text: "array int[10,10];" },
+      ],
+      correctOption: 1,
     },
     {
       id: 9,
-      question: "Which of the following is a loop control statement in C?",
+      question:
+        'What is the output of the following code?\n\nint arr[] = {10, 20, 30};\nprintf("%d", arr[2]);',
       options: [
-        { id: 1, text: "if" },
-        { id: 2, text: "while" },
-        { id: 3, text: "switch" },
-        { id: 4, text: "goto" },
+        { id: 1, text: "10" },
+        { id: 2, text: "20" },
+        { id: 3, text: "30" },
+        { id: 4, text: "Garbage value" },
       ],
-      correctOption: 2,
+      correctOption: 3,
     },
     {
       id: 10,
-      question: "Which of the following is used for comments in C?",
+      question: "How do you initialize an array in C++ with specific values?",
       options: [
-        { id: 1, text: "// Comment" },
-        { id: 2, text: "/* Comment */" },
-        { id: 3, text: "Both 1 and 2" },
-        { id: 4, text: "# Comment" },
+        { id: 1, text: "int array[3] = {1, 2, 3};" },
+        { id: 2, text: "int array = {1, 2, 3};" },
+        { id: 3, text: "array[3] int = {1, 2, 3};" },
+        { id: 4, text: "array int = {1, 2, 3};" },
       ],
-      correctOption: 3,
-    },
-    {
-      id: 11,
-      question:
-        "Which of the following is not a valid floating point constant?",
-      options: [
-        { id: 1, text: "3.14" },
-        { id: 2, text: ".3e12" },
-        { id: 3, text: "314e" },
-        { id: 4, text: "3.1E+12" },
-      ],
-      correctOption: 3,
-    },
-    {
-      id: 12,
-      question: "Which of the following is not a valid integer constant?",
-      options: [
-        { id: 1, text: "0" },
-        { id: 2, text: "123" },
-        { id: 3, text: "0123" },
-        { id: 4, text: "123.0" },
-      ],
-      correctOption: 4,
-    },
-    {
-      id: 13,
-      question: "Which of the following is not a valid escape sequence?",
-      options: [
-        { id: 1, text: "\\n" },
-        { id: 2, text: "\\t" },
-        { id: 3, text: "\\a" },
-        { id: 4, text: "\\e" },
-      ],
-      correctOption: 4,
-    },
-    {
-      id: 14,
-      question: "Which of the following is not a valid character constant?",
-      options: [
-        { id: 1, text: "'a'" },
-        { id: 2, text: "'\\n'" },
-        { id: 3, text: "'\\x41'" },
-        { id: 4, text: '"a"' },
-      ],
-      correctOption: 4,
-    },
-    {
-      id: 15,
-      question: "Which of the following is not a valid string literal?",
-      options: [
-        { id: 1, text: '"Hello"' },
-        { id: 2, text: '"Hello, World"' },
-        { id: 3, text: "'Hello'" },
-        { id: 4, text: '""' },
-      ],
-      correctOption: 3,
-    },
-    {
-      id: 16,
-      question: "Which of the following is not a valid comment?",
-      options: [
-        { id: 1, text: "/* Comment */" },
-        { id: 2, text: "// Comment" },
-        { id: 3, text: "/* Comment" },
-        { id: 4, text: "// Comment */" },
-      ],
-      correctOption: 3,
-    },
-    {
-      id: 17,
-      question: "Which of the following is not a valid preprocessor directive?",
-      options: [
-        { id: 1, text: "#define" },
-        { id: 2, text: "#include" },
-        { id: 3, text: "#ifdef" },
-        { id: 4, text: "#pragma" },
-      ],
-      correctOption: 4,
-    },
-    {
-      id: 18,
-      question: "Which of the following is not a valid storage class?",
-      options: [
-        { id: 1, text: "auto" },
-        { id: 2, text: "register" },
-        { id: 3, text: "static" },
-        { id: 4, text: "constant" },
-      ],
-      correctOption: 4,
-    },
-    {
-      id: 19,
-      question: "Which of the following is not a valid loop control statement?",
-      options: [
-        { id: 1, text: "for" },
-        { id: 2, text: "while" },
-        { id: 3, text: "do-while" },
-        { id: 4, text: "until" },
-      ],
-      correctOption: 4,
-    },
-    {
-      id: 20,
-      question: "Which of the following is not a valid function?",
-      options: [
-        { id: 1, text: "printf" },
-        { id: 2, text: "scanf" },
-        { id: 3, text: "main" },
-        { id: 4, text: "return" },
-      ],
-      correctOption: 4,
+      correctOption: 1,
     },
   ];
 
-  const questionSets = [
-    questions.slice(0, 5),
-    questions.slice(5, 10),
-    questions.slice(10, 15),
-    questions.slice(15, 20),
-  ];
+  const questionSets = [questions.slice(0, 5), questions.slice(5, 10)];
 
   const handleSubmit = async (autoSubmit = false) => {
     if (submitted) return;
@@ -323,10 +209,10 @@ export default function Quiz() {
     });
 
     setScore(totalScore);
-    localStorage.setItem("score", JSON.stringify(totalScore));
+    localStorage.setItem("scoreArrayCpp", JSON.stringify(totalScore));
 
     setSubmitted(true);
-    localStorage.setItem("submitted", JSON.stringify(true));
+    localStorage.setItem("submittedArrayCpp", JSON.stringify(true));
 
     if (totalScore > 3) {
       setNextLevelUnlocked(true);
@@ -358,7 +244,7 @@ export default function Quiz() {
 
       const data = await response.json();
       if (data.success) {
-        window.location.href = "/array";
+        window.location.href = "/operatorscpp";
         alert("You have successfully moved to next level of the course!");
       } else {
         console.error("Failed to unlock next level");
@@ -389,7 +275,7 @@ export default function Quiz() {
     }
   };
   const navigateToNextPage = () => {
-    window.location.href = "/array";
+    window.location.href = "/operatorscpp";
   };
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
@@ -417,26 +303,27 @@ export default function Quiz() {
       );
       return;
     }
-    localStorage.removeItem("selectedOptions");
-    localStorage.removeItem("score");
-    localStorage.removeItem("submitted");
+    localStorage.removeItem("selectedOptionsArrayCpp");
+    localStorage.removeItem("scoreArrayCpp");
+    localStorage.removeItem("submittedArrayCpp");
 
     window.location.reload();
   };
 
   useEffect(() => {
-    localStorage.setItem("selectedOptions", JSON.stringify(selectedOptions));
-    localStorage.setItem("score", JSON.stringify(score));
-    localStorage.setItem("submitted", JSON.stringify(submitted));
-    localStorage.setItem("currentSet", JSON.stringify(currentSet));
-    localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
+    localStorage.setItem(
+      "selectedOptionsArrayCpp",
+      JSON.stringify(selectedOptions)
+    );
+    localStorage.setItem("scoreArrayCpp", JSON.stringify(score));
+    localStorage.setItem("submittedArrayCpp", JSON.stringify(submitted));
+    localStorage.setItem("currentSetArrayCpp", JSON.stringify(currentSet));
+    localStorage.setItem("timeLeftArrayCpp", JSON.stringify(timeLeft));
   }, [selectedOptions, score, submitted, currentSet, timeLeft]);
 
   return (
     <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-100 to-white-500 min-h-screen ">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">
-        Quiz on Variables
-      </h1>
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Arrays</h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
           Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
@@ -444,7 +331,7 @@ export default function Quiz() {
       </div>
       {!submitted && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 5 questions on VARIABLES. You{" "}
+          There are 5 questions on ARRAYS. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>
@@ -548,7 +435,7 @@ export default function Quiz() {
               setShowFeedback(false);
               setScore(0);
               setSelectedOptions({});
-              setCurrentSet((currentSet % 4) + 1); // Alternate between set 1 and set 4
+              setCurrentSet((currentSet % 2) + 1); // Alternate between set 1 and set 2
               setTimeLeft(120); // Reset the timer
             }}
             className="bg-blue-500 text-white px-4 py-2 rounded mt-4"

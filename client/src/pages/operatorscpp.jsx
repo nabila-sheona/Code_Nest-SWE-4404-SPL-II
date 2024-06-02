@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { downloadPDF } from "../utils/pdf";
 
-export default function Operators() {
+export default function OperatorsCpp() {
   const [highlightedText, setHighlightedText] = useState("");
   const [highlightedRanges, setHighlightedRanges] = useState([]);
   const [userText, setUserText] = useState("Hello, world!");
@@ -10,7 +10,7 @@ export default function Operators() {
 
   const pdfRef = useRef();
   useEffect(() => {
-    if (location.pathname === "/operators") {
+    if (location.pathname === "/operatorscpp") {
       const scriptConfig = document.createElement("script");
       scriptConfig.innerHTML = `
       window.embeddedChatbotConfig = {
@@ -83,7 +83,7 @@ export default function Operators() {
   };
 
   const unlockNextLevel = () => {
-    window.location.href = "/Opquiz";
+    window.location.href = "/Opquizcpp";
   };
 
   return (
@@ -93,14 +93,16 @@ export default function Operators() {
         id="pdfContent"
         onClick={handleHighlight}
       >
-        <h1 className="text-3xl font-bold mb-8 text-sky-800">Operators in C</h1>
+        <h1 className="text-3xl font-bold mb-8 text-sky-800">
+          Operators in C++
+        </h1>
         <p>
-          Operators in C are symbols that are used to perform operations on
-          operands. C provides a rich set of operators categorized into various
-          types such as arithmetic, relational, logical, assignment, and bitwise
-          operators.
+          Operators in C++ are symbols that are used to perform operations on
+          operands. C++ provides a rich set of operators categorized into
+          various types such as arithmetic, relational, logical, assignment, and
+          bitwise operators.
         </p>
-        <p>Here are some common operators used in C programming:</p>
+        <p>Here are some common operators used in C++ programming:</p>
         <ul className="list-disc pl-6">
           <li>
             Arithmetic Operators: <code>+, -, *, /, %</code>
@@ -116,6 +118,9 @@ export default function Operators() {
           </li>
           <li>
             Bitwise Operators: <code>&, |, ^, ~, {"<<, >>"}</code>
+          </li>
+          <li>
+            Increment and Decrement Operators: <code>++, --</code>
           </li>
         </ul>
 
@@ -221,36 +226,77 @@ int rightShift = a >> 1; // rightShift is 2 (binary: 0010)
             `}
           </code>
         </pre>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Increment and Decrement Operators
+        </h2>
+        <p>
+          Increment and decrement operators are used to increase or decrease the
+          value of a variable by one.
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+int a = 10;
+a++; // a is now 11
+a--; // a is now 10
+            `}
+          </code>
+        </pre>
+
+        <h2 className="text-2xl font-bold mt-8 text-sky-700">
+          Comparison Operators
+        </h2>
+        <p>
+          Comparison operators are used to compare two values. They return a
+          boolean result (true or false).
+        </p>
+        <pre className="bg-gray-200 p-4 rounded-md">
+          <code>
+            {`
+int x = 10;
+int y = 20;
+bool isEqual = (x == y); // isEqual is false
+bool isNotEqual = (x != y); // isNotEqual is true
+bool isLess = (x < y); // isLess is true
+bool isGreater = (x > y); // isGreater is false
+bool isLessOrEqual = (x <= y); // isLessOrEqual is true
+bool isGreaterOrEqual = (x >= y); // isGreaterOrEqual is false
+            `}
+          </code>
+        </pre>
       </div>
 
-      <div className="mt-4">
-        <button
-          className="bg-sky-800 text-white px-4 py-2 rounded-md"
-          onClick={downloadPDF}
-        >
-          Download PDF
-        </button>
-        {isButtonVisible && ( // Render the button only when text is highlighted
+      {highlightedText && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mt-8 text-sky-700">
+            Highlighted Text
+          </h2>
+          <p>{highlightedText}</p>
           <button
-            className="bg-sky-800 text-white px-4 py-2 ml-2 rounded-md"
             onClick={undoHighlight}
+            className="bg-red-500 text-white px-4 py-2 rounded-md"
           >
-            Check Last Highlight and remove
+            Undo Highlight
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
-      <p className="mt-4">Highlighted Text: {highlightedText}</p>
-
-      {/* Unlock Next Level button */}
-      <div className="mt-4">
+      {isButtonVisible && (
         <button
-          className="bg-green-500 text-white px-4 py-2 rounded-md"
           onClick={unlockNextLevel}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
         >
-          Take the quiz to Unlock Next Level
+          Next Level
         </button>
-      </div>
+      )}
+
+      <button
+        onClick={() => downloadPDF(pdfRef)}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+      >
+        Download PDF
+      </button>
     </div>
   );
 }

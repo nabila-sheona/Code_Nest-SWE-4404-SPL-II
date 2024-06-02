@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import "./HelloWorld.css"; // Import CSS for styling
 import { downloadPDF } from "../utils/pdf";
 
-export default function variables() {
+export default function VariablesCpp() {
   const pdfRef = useRef();
   const [highlightedText, setHighlightedText] = useState("");
   const [highlightedRanges, setHighlightedRanges] = useState([]);
-
   const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
 
   useEffect(() => {
-    if (location.pathname === "/variables") {
+    if (location.pathname === "/variables_cpp") {
       const scriptConfig = document.createElement("script");
       scriptConfig.innerHTML = `
       window.embeddedChatbotConfig = {
@@ -80,13 +79,13 @@ export default function variables() {
   };
 
   const unlockNextLevel = () => {
-    window.location.href = "/Quiz";
+    window.location.href = "/vQuiz_cpp";
   };
 
   return (
     <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen ">
       <h1 className="text-5xl font-bold mb-8 text-sky-800">
-        Variables & Types
+        Variables & Types (C++)
       </h1>
 
       <div className="max-w-screen-lg mx-auto px-4" onClick={handleHighlight}>
@@ -96,7 +95,7 @@ export default function variables() {
           <section>
             <h3 className="font-semibold">Character Set</h3>
             <p className="rounded-md keyword-box border border-gray-300 p-4 bg-gray-300">
-              The C language uses a character set that includes alphabets,
+              The C++ language uses a character set that includes alphabets,
               letters, and some special characters.
             </p>
           </section>
@@ -141,7 +140,7 @@ export default function variables() {
           </section>
         </section>
 
-        <h2 className="font-semibold">C Keywords</h2>
+        <h2 className="font-semibold">C++ Keywords</h2>
         <p>
           Keywords are reserved words with specific meanings to the compiler.
           They define the language's syntax and cannot be used as identifiers
@@ -151,8 +150,8 @@ export default function variables() {
         <div className="rounded-md keyword-box border border-gray-300 p-4 bg-gray-300">
           <ul>
             <p>
-              <p className="font-semibold">auto:</p> Declares automatic
-              variables (e.g., auto int var1;)
+              <p className="font-semibold">auto:</p> Automatically deduces the
+              type of the variable
             </p>
             <p>
               <p className="font-semibold">break:</p> Terminates loops and
@@ -170,10 +169,10 @@ export default function variables() {
         </div>
 
         <section>
-          <h2 className="font-semibold">C Identifiers</h2>
+          <h2 className="font-semibold">C++ Identifiers</h2>
           <p className="rounded-md keyword-box border border-gray-300 p-4 bg-gray-300">
             Identifiers are user-defined names given to variables, functions,
-            structures, and other entities in your C code.
+            structures, and other entities in your C++ code.
           </p>
         </section>
       </div>
@@ -199,7 +198,7 @@ export default function variables() {
 
       <div className="mt-4 text-center">
         <Link
-          to="/variablesquiz"
+          to="/vQuiz_cpp"
           className="btn bg-green-500 text-white px-4 py-2 rounded-md"
         >
           Take the quiz to Unlock Next Level

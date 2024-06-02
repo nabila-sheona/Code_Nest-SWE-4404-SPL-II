@@ -56,8 +56,8 @@ export default function CForeword() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-20 lg:px-32 xl:px-48">
-      <h1 className="text-4xl font-bold mb-6 text-center text-blue-600">
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-200 to-white-450 min-h-screen ">
+      <h1 className="text-4xl font-bold mb-6 text-center text-blue-800">
         Foreword about C Language
       </h1>
       <p className="text-xl mb-8">

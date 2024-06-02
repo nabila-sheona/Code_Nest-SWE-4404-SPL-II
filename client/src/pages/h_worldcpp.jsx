@@ -1,27 +1,26 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./HelloWorld.css";
 import { downloadPDF } from "../utils/pdf";
 import { useSelector } from "react-redux";
 
-export default function HelloWorld() {
+export default function HelloWorldCpp() {
   const pdfRef = useRef();
   const [highlightedText, setHighlightedText] = useState("");
   const [highlightedRanges, setHighlightedRanges] = useState([]);
   const [userText, setUserText] = useState("Hello, world!");
-  const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
   const MAX_TEXT_LENGTH = 30;
   const location = useLocation();
 
   const [currentLevel, setCurrentLevel] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
-  const courseName = "C Programming";
-  const courseTopic = "helloworld";
+  const courseName = "Cpp";
+  const courseTopic = "helloworldcpp";
 
   const fetchUserLevel = async () => {
     try {
-      // Corrected to handle spaces in the course name using encodeURIComponent
       const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
         currentUser.username
       }`;
@@ -30,7 +29,6 @@ export default function HelloWorld() {
         throw new Error("Failed to fetch user level");
       }
       const data = await response.json();
-      // Assuming data directly returns the level
       setCurrentLevel(data);
     } catch (error) {
       console.error("Error fetching user level:", error);
@@ -41,11 +39,10 @@ export default function HelloWorld() {
     if (currentUser && currentUser.username && courseName) {
       fetchUserLevel();
     }
-  }, [currentUser, courseName]); // Dependency array includes currentUser and courseName
+  }, [currentUser, courseName]);
 
   const NextLevel = () => {
-    //variable the fetchUserLevel and check if level >=1
-    window.location.href = "/variables";
+    window.location.href = "/variables_cpp";
   };
 
   const unlockNextLevel = async () => {
@@ -64,7 +61,7 @@ export default function HelloWorld() {
 
       const data = await response.json();
       if (data.success) {
-        window.location.href = "/variables";
+        window.location.href = "/variables_cpp";
         alert("You have successfully moved to next level of the course!");
       } else {
         console.error("Failed to unlock next level");
@@ -75,13 +72,7 @@ export default function HelloWorld() {
   };
 
   useEffect(() => {
-    if (currentUser && currentUser.username && courseName) {
-      fetchUserLevel();
-    }
-  }, [currentUser, courseName]);
-
-  useEffect(() => {
-    if (location.pathname === "/hello-world") {
+    if (location.pathname === "/h_worldcpp") {
       const scriptConfig = document.createElement("script");
       scriptConfig.innerHTML = `
       window.embeddedChatbotConfig = {
@@ -115,14 +106,13 @@ export default function HelloWorld() {
       const range = selection.getRangeAt(i);
       ranges.push({
         range,
-        color: "yellow", // Set the default highlight color here
+        color: "yellow",
       });
     }
 
     setHighlightedRanges([...highlightedRanges, ...ranges]);
     setHighlightedText(selectedText);
-    setIsButtonVisible(true); // Show the button when text is highlighted
-    //selection.removeAllRanges(); // Clear the selection
+    setIsButtonVisible(true);
   };
 
   const undoHighlight = () => {
@@ -131,7 +121,7 @@ export default function HelloWorld() {
     const lastHighlightedColor = lastHighlightedRange.color;
 
     setHighlightedText(lastHighlightedText);
-    setHighlightedRanges([...highlightedRanges]); // Update the highlightedRanges state without the last highlight
+    setHighlightedRanges([...highlightedRanges]);
 
     const selection = window.getSelection();
     const range = document.createRange();
@@ -146,7 +136,7 @@ export default function HelloWorld() {
     selection.removeAllRanges();
     selection.addRange(range);
 
-    document.execCommand("hiliteColor", false, lastHighlightedColor); // Apply highlight color
+    document.execCommand("hiliteColor", false, lastHighlightedColor);
   };
 
   const handleUserTextChange = (e) => {
@@ -156,7 +146,9 @@ export default function HelloWorld() {
 
   return (
     <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen ">
-      <h1 className="text-5xl font-bold mb-8 text-sky-800">Hello, World!</h1>
+      <h1 className="text-5xl font-bold mb-8 text-sky-800">
+        Hello, World! (C++)
+      </h1>
       <div
         className="max-w-screen-lg mx-auto px-4"
         id="pdfContent"
@@ -168,14 +160,14 @@ export default function HelloWorld() {
           The "Hello, world!" program holds a special place in the realm of
           computer programming. While seemingly trivial, its significance
           extends far beyond its modest output. As one embarks on the journey of
-          learning C programming, the creation of this foundational program
+          learning C++ programming, the creation of this foundational program
           marks a pivotal moment, symbolizing the initiation into a world of
           logic, syntax, and problem-solving.
         </p>
         <p>
           With anticipation and trepidation, the novice programmer opens their
           preferred text editor and begins to transcribe the cryptic symbols
-          that constitute the C programming language. With each keystroke, the
+          that constitute the C++ programming language. With each keystroke, the
           compiler awaits, ready to transform the abstract constructs into
           executable instructions.
         </p>
@@ -190,13 +182,14 @@ export default function HelloWorld() {
           <pre className="text-gray-700">
             <code>
               {`
-#include <stdio.h>
+#include <iostream>
+using namespace std;
 
 int main() {
-    printf("${userText}\\n"); // Updated to use userText variable
+    cout << "${userText}" << endl; // Updated to use userText variable
     return 0;
 }
-            `}
+              `}
             </code>
           </pre>
         </div>
@@ -236,7 +229,7 @@ int main() {
         >
           Download PDF
         </button>
-        {isButtonVisible && ( // Render the button only when text is highlighted
+        {isButtonVisible && (
           <button
             className="bg-sky-800 text-white px-4 py-2 ml-2 rounded-md"
             onClick={undoHighlight}
@@ -248,7 +241,6 @@ int main() {
 
       <p className="mt-4">Highlighted Text: {highlightedText}</p>
 
-      {/* Unlock Next Level button */}
       <div className="mt-4">
         {currentLevel < 1 ? (
           <button

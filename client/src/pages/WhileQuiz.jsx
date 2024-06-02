@@ -13,7 +13,7 @@ export default function Quiz() {
   const [submitted, setSubmitted] = useState(
     JSON.parse(localStorage.getItem("submitted")) || false
   );
-  const [ setNextLevelUnlocked] = useState(false);
+  const [setNextLevelUnlocked] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
@@ -22,7 +22,9 @@ export default function Quiz() {
 
   const fetchUserLevel = async () => {
     try {
-      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
+        currentUser.username
+      }`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch user level");
@@ -40,7 +42,6 @@ export default function Quiz() {
     }
   }, [currentUser, courseName]);
 
-  
   const [currentSet, setCurrentSet] = useState(
     JSON.parse(localStorage.getItem("currentSet")) || 1
   );
@@ -65,9 +66,6 @@ export default function Quiz() {
 
     return () => clearInterval(timer);
   }, [submitted]);
-
-
-
 
   const questions = [
     {
@@ -373,7 +371,6 @@ export default function Quiz() {
 
     if (totalScore > 3) {
       setNextLevelUnlocked(true);
-      
     }
   };
 
@@ -411,10 +408,10 @@ export default function Quiz() {
     }
   };
 
-  
   const navigateToNextPage = () => {
     window.location.href = "/functions";
   };
+
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
       setSelectedOptions({
@@ -457,7 +454,7 @@ export default function Quiz() {
   }, [selectedOptions, score, submitted, currentSet, timeLeft]);
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen">
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-100 to-white-500 min-h-screen ">
       <h1 className="text-3xl font-bold mb-8 text-sky-800">
         Quiz on While Loops
       </h1>
@@ -558,7 +555,10 @@ export default function Quiz() {
           </div>
 
           {score >= 4 && (
-            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
+            <button
+              onClick={handleLevelUpdate}
+              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
+            >
               Unlock Next Level
             </button>
           )}

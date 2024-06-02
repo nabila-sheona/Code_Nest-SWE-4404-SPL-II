@@ -1,22 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import "./C.css";
 import { downloadPDF } from "../utils/pdf";
 
-export default function ForLoop() {
+export default function ArraysCpp() {
   const pdfRef = useRef();
 
   const [highlightedText, setHighlightedText] = useState("");
   const [highlightedRanges, setHighlightedRanges] = useState([]);
-  const [isButtonVisible, setIsButtonVisible] = useState(false);
+  const [userText, setUserText] = useState("Hello, world!");
+  const [isButtonVisible, setIsButtonVisible] = useState(false); // State variable to track button visibility
   const MAX_TEXT_LENGTH = 30;
 
   const unlockNextLevel = () => {
-    window.location.href = "/for-loopsQuiz";
+    window.location.href = "/ArrayquizCpp";
   };
 
   useEffect(() => {
-    if (location.pathname === "/for-loops") {
+    if (location.pathname === "/arraycpp") {
       const scriptConfig = document.createElement("script");
       scriptConfig.innerHTML = `
       window.embeddedChatbotConfig = {
@@ -39,6 +39,7 @@ export default function ForLoop() {
       };
     }
   }, [location.pathname]);
+
   const handleHighlight = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();
@@ -49,13 +50,13 @@ export default function ForLoop() {
       const range = selection.getRangeAt(i);
       ranges.push({
         range,
-        color: "yellow",
+        color: "yellow", // Set the default highlight color here
       });
     }
 
     setHighlightedRanges([...highlightedRanges, ...ranges]);
     setHighlightedText(selectedText);
-    setIsButtonVisible(true);
+    setIsButtonVisible(true); // Show the button when text is highlighted
   };
 
   const undoHighlight = () => {
@@ -64,7 +65,7 @@ export default function ForLoop() {
     const lastHighlightedColor = lastHighlightedRange.color;
 
     setHighlightedText(lastHighlightedText);
-    setHighlightedRanges([...highlightedRanges]);
+    setHighlightedRanges([...highlightedRanges]); // Update the highlightedRanges state without the last highlight
 
     const selection = window.getSelection();
     const range = document.createRange();
@@ -79,7 +80,7 @@ export default function ForLoop() {
     selection.removeAllRanges();
     selection.addRange(range);
 
-    document.execCommand("hiliteColor", false, lastHighlightedColor);
+    document.execCommand("hiliteColor", false, lastHighlightedColor); // Apply highlight color
   };
 
   const handleUserTextChange = (e) => {
@@ -94,92 +95,43 @@ export default function ForLoop() {
         id="pdfContent"
         onClick={handleHighlight}
       >
-        <h1 className="text-3xl font-bold mb-8 text-sky-800">For Loop in C</h1>
+        <h1 className="text-3xl font-bold mb-8 text-sky-800">Arrays in C++</h1>
         <p>
-          The <code>for</code> loop in C is a control flow statement that allows
-          code to be executed repeatedly based on a given Boolean condition. The{" "}
-          <code>for</code> loop is useful when you know beforehand how many
-          times you want to execute a statement or a block of statements.
+          An array is a collection of elements of the same data type, stored in
+          contiguous memory locations. It allows you to store multiple values of
+          the same type under a single name.
         </p>
-        <h3 className="text-xl font-semibold mb-2">Syntax</h3>
+        <p>
+          To declare an array in C++, you specify the data type of the elements
+          and the size of the array. For example:
+        </p>
         <pre className="rounded-md keyword-box border border-gray-300 p-4 bg-gray-300">
           <code>
-            {`for (initialization; condition; increment/decrement) {
-    // statements
-}`}
+            {`
+int numbers[5]; // Declares an array named 'numbers' with 5 integer elements
+float prices[10]; // Declares an array named 'prices' with 10 floating-point elements
+char letters[26]; // Declares an array named 'letters' with 26 character elements
+`}
           </code>
         </pre>
-        <p className="mb-4">
-          - <strong>Initialization:</strong> This step is executed first and
-          only once. It allows you to declare and initialize any loop control
-          variables.
-          <br />- <strong>Condition:</strong> This is the second step that is
-          evaluated before each iteration of the loop. If the condition is true,
-          the loop statements execute. If it is false, the loop terminates.
-          <br />- <strong>Increment/Decrement:</strong> This is executed after
-          the body of the loop and updates the loop control variable.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-2">
-          Example 1: Simple For Loop
-        </h3>
+        <p>You can also initialize an array at the time of declaration:</p>
         <pre className="rounded-md keyword-box border border-gray-300 p-4 bg-gray-300">
           <code>
-            {`#include <stdio.h>
-
-int main() {
-    for (int i = 0; i < 5; i++) {
-        printf("Value of i: %d\\n", i);
-    }
-    return 0;
-}`}
+            {`
+int numbers[5] = {1, 2, 3, 4, 5}; // Initializes an array named 'numbers' with 5 integer elements
+float prices[3] = {2.99, 4.50, 9.75}; // Initializes an array named 'prices' with 3 floating-point elements
+char vowels[5] = {'a', 'e', 'i', 'o', 'u'}; // Initializes an array named 'vowels' with 5 character elements
+`}
           </code>
         </pre>
-        <p className="mb-4">
-          Output:
-          <pre className="bg-gray-100 p-2">
-            {`Value of i: 0
-Value of i: 1
-Value of i: 2
-Value of i: 3
-Value of i: 4`}
-          </pre>
+        <p>
+          Arrays are indexed starting from 0. You can access individual elements
+          of an array using their index.
         </p>
-
-        <h3 className="text-xl font-semibold mb-2">
-          Example 2: Nested For Loop
-        </h3>
-        <pre className="rounded-md keyword-box border border-gray-300 p-4 bg-gray-300">
-          <code>
-            {`#include <stdio.h>
-
-int main() {
-    for (int i = 1; i <= 3; i++) {
-        for (int j = 1; j <= 3; j++) {
-            printf("(%d, %d)\\n", i, j);
-        }
-    }
-    return 0;
-}`}
-          </code>
-        </pre>
-        <p className="mb-4">
-          Output:
-          <pre className="bg-gray-100 p-2">
-            {`(1, 1)
-(1, 2)
-(1, 3)
-(2, 1)
-(2, 2)
-(2, 3)
-(3, 1)
-(3, 2)
-(3, 3)`}
-          </pre>
-        </p>
-
-        <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mb-4">
-          {" "}
+        <p>
+          Understanding arrays is essential for handling collections of data
+          efficiently in C++ programming. They are widely used in various
+          algorithms and data structures.
         </p>
       </div>
 
@@ -190,7 +142,7 @@ int main() {
         >
           Download PDF
         </button>
-        {isButtonVisible && (
+        {isButtonVisible && ( // Render the button only when text is highlighted
           <button
             className="bg-sky-800 text-white px-4 py-2 ml-2 rounded-md"
             onClick={undoHighlight}
@@ -202,6 +154,7 @@ int main() {
 
       <p className="mt-4">Highlighted Text: {highlightedText}</p>
 
+      {/* Unlock Next Level button */}
       <div className="mt-4">
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-md"

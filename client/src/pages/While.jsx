@@ -88,7 +88,7 @@ export default function WhileLoop() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen ">
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen ">
       <div
         className="max-w-screen-lg mx-auto px-4"
         id="pdfContent"

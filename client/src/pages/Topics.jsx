@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faUnlock } from "@fortawesome/free-solid-svg-icons";
 import ProgressBar from "./ProgressBar"; // Import the ProgressBar component
 
 export default function C() {
@@ -65,7 +67,9 @@ export default function C() {
   return (
     <div className="bg-gradient-to-br from-sky-300 to-white-500">
       <div className="p-3 max-w-lg mx-auto min-h-screen">
-        <h1 className="text-3xl font-semibold text-center my-7">Topics</h1>
+        <h1 className="text-5xl font-bold text-center my-7 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-green-800">
+          Topics for C
+        </h1>
         {loading ? (
           <div>Loading...</div>
         ) : error ? (
@@ -78,18 +82,24 @@ export default function C() {
             <div className="mb-4">
               <ProgressBar progress={progressPercentage} />
             </div>
-            <ul>
+            <ul className="list-disc pl-5">
               {topics.map((topic, index) => (
                 <li
                   key={index}
                   className={`text-indigo-900 hover:text-gray-500 ${
                     !topic.isUnlocked ? "opacity-50" : ""
-                  }`}
+                  } flex items-center`}
                 >
                   {topic.isUnlocked ? (
-                    <Link to={topic.link}>{topic.name} [Unlocked]</Link>
+                    <Link to={topic.link} className="flex items-center">
+                      {index + 1}. {topic.name}{" "}
+                      <FontAwesomeIcon icon={faUnlock} className="ml-2" />
+                    </Link>
                   ) : (
-                    <span>{topic.name} [Locked]</span>
+                    <span className="flex items-center">
+                      {index + 1}. {topic.name}{" "}
+                      <FontAwesomeIcon icon={faLock} className="ml-2" />
+                    </span>
                   )}
                 </li>
               ))}

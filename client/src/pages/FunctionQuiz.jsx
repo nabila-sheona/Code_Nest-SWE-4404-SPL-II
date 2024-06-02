@@ -23,10 +23,12 @@ export default function Quiz() {
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "C Programming";
   const courseTopic = "functions";
- 
+
   const fetchUserLevel = async () => {
     try {
-      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${currentUser.username}`;
+      const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
+        currentUser.username
+      }`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch user level");
@@ -43,7 +45,6 @@ export default function Quiz() {
       fetchUserLevel();
     }
   }, [currentUser, courseName]);
-
 
   useEffect(() => {
     if (!sessionStorage.getItem("hasRefreshed")) {
@@ -70,11 +71,11 @@ export default function Quiz() {
     return () => clearInterval(timer);
   }, [submitted]);
 
-
   const questions = [
     {
       id: 1,
-      question: "Which of the following is NOT a valid return type for a function in C?",
+      question:
+        "Which of the following is NOT a valid return type for a function in C?",
       options: [
         { id: 1, text: "void" },
         { id: 2, text: "int" },
@@ -96,7 +97,8 @@ export default function Quiz() {
     },
     {
       id: 3,
-      question: "Which of the following is the correct syntax for a function declaration in C?",
+      question:
+        "Which of the following is the correct syntax for a function declaration in C?",
       options: [
         { id: 1, text: "functionName(returnType);" },
         { id: 2, text: "returnType functionName();" },
@@ -107,7 +109,8 @@ export default function Quiz() {
     },
     {
       id: 4,
-      question: "What is the output of the following function call: printf(\"%d\", sum(2, 3)); if the sum function is defined as int sum(int a, int b) { return a + b; }?",
+      question:
+        'What is the output of the following function call: printf("%d", sum(2, 3)); if the sum function is defined as int sum(int a, int b) { return a + b; }?',
       options: [
         { id: 1, text: "5" },
         { id: 2, text: "2" },
@@ -129,7 +132,8 @@ export default function Quiz() {
     },
     {
       id: 6,
-      question: "Which of the following is the correct way to define a function in C that takes two integer parameters and returns an integer?",
+      question:
+        "Which of the following is the correct way to define a function in C that takes two integer parameters and returns an integer?",
       options: [
         { id: 1, text: "int function(int a, int b) { return a + b; }" },
         { id: 2, text: "int function(a, b) { return a + b; }" },
@@ -140,7 +144,8 @@ export default function Quiz() {
     },
     {
       id: 7,
-      question: "What is the default return type of a function if not specified in C?",
+      question:
+        "What is the default return type of a function if not specified in C?",
       options: [
         { id: 1, text: "void" },
         { id: 2, text: "int" },
@@ -155,7 +160,10 @@ export default function Quiz() {
       options: [
         { id: 1, text: "A function that is used to create objects" },
         { id: 2, text: "A function that returns a pointer" },
-        { id: 3, text: "A declaration of a function that specifies the function's name, return type, and parameters" },
+        {
+          id: 3,
+          text: "A declaration of a function that specifies the function's name, return type, and parameters",
+        },
         { id: 4, text: "A function that is used only once" },
       ],
       correctOption: 3,
@@ -184,7 +192,8 @@ export default function Quiz() {
     },
     {
       id: 11,
-      question: "What will be the output of the following code: void func() { static int x = 0; x++; printf(\"%d\", x); } int main() { func(); func(); }",
+      question:
+        'What will be the output of the following code: void func() { static int x = 0; x++; printf("%d", x); } int main() { func(); func(); }',
       options: [
         { id: 1, text: "1 1" },
         { id: 2, text: "1 2" },
@@ -195,11 +204,15 @@ export default function Quiz() {
     },
     {
       id: 12,
-      question: "Which of the following is a correct statement about function overloading in C?",
+      question:
+        "Which of the following is a correct statement about function overloading in C?",
       options: [
         { id: 1, text: "C supports function overloading" },
         { id: 2, text: "C does not support function overloading" },
-        { id: 3, text: "Function overloading is the same as function overriding" },
+        {
+          id: 3,
+          text: "Function overloading is the same as function overriding",
+        },
         { id: 4, text: "Function overloading is supported in C++ only" },
       ],
       correctOption: 2,
@@ -217,7 +230,8 @@ export default function Quiz() {
     },
     {
       id: 14,
-      question: "What will happen if a function with a void return type has a return statement with a value?",
+      question:
+        "What will happen if a function with a void return type has a return statement with a value?",
       options: [
         { id: 1, text: "Compilation error" },
         { id: 2, text: "Runtime error" },
@@ -228,7 +242,8 @@ export default function Quiz() {
     },
     {
       id: 15,
-      question: "What is the scope of a variable declared inside a function in C?",
+      question:
+        "What is the scope of a variable declared inside a function in C?",
       options: [
         { id: 1, text: "Global scope" },
         { id: 2, text: "Local scope" },
@@ -250,7 +265,8 @@ export default function Quiz() {
     },
     {
       id: 17,
-      question: "What will be the output of the following code: int func(int a) { if(a <= 1) return 1; return a * func(a - 1); } int main() { printf(\"%d\", func(3)); }",
+      question:
+        'What will be the output of the following code: int func(int a) { if(a <= 1) return 1; return a * func(a - 1); } int main() { printf("%d", func(3)); }',
       options: [
         { id: 1, text: "1" },
         { id: 2, text: "3" },
@@ -261,7 +277,8 @@ export default function Quiz() {
     },
     {
       id: 18,
-      question: "What is the output of the following code: int sum(int a, int b) { return a + b; } int main() { int result = sum(5, 3); printf(\"%d\", result); }",
+      question:
+        'What is the output of the following code: int sum(int a, int b) { return a + b; } int main() { int result = sum(5, 3); printf("%d", result); }',
       options: [
         { id: 1, text: "8" },
         { id: 2, text: "5" },
@@ -272,7 +289,8 @@ export default function Quiz() {
     },
     {
       id: 19,
-      question: "What will be the output of the following code: void func() { printf(\"Hello, World!\"); } int main() { func(); }",
+      question:
+        'What will be the output of the following code: void func() { printf("Hello, World!"); } int main() { func(); }',
       options: [
         { id: 1, text: "Hello, World!" },
         { id: 2, text: "Hello" },
@@ -390,12 +408,10 @@ export default function Quiz() {
     }
   };
   const navigateToNextPage = () => {
-
     //window.location.href = "/theend";
 
     alert("You have successfully moved to next level of the course!");
   };
-
 
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
@@ -440,8 +456,10 @@ export default function Quiz() {
   }, [selectedOptions, score, submitted, currentSet, timeLeft]);
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on Functions</h1>
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-100 to-white-500 min-h-screen ">
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">
+        Quiz on Functions
+      </h1>
       <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
         <div className="text-red-500 text-lg font-semibold">
           Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
@@ -539,8 +557,11 @@ export default function Quiz() {
           </div>
 
           {score >= 4 && (
-            <button onClick={handleLevelUpdate} className="btn bg-yellow-300 text-black px-4 py-2 rounded-md">
-              Unlock Next Level
+            <button
+              onClick={handleLevelUpdate}
+              className="btn bg-yellow-300 text-black px-4 py-2 rounded-md"
+            >
+              Course Complete
             </button>
           )}
           <button
