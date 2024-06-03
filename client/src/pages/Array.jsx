@@ -12,6 +12,7 @@ export default function Arrays() {
   const MAX_TEXT_LENGTH = 30;
 
   const unlockNextLevel = () => {
+    window.location.reload();
     window.location.href = "/Arrayquiz";
   };
 
@@ -160,7 +161,8 @@ char vowels[5] = {'a', 'e', 'i', 'o', 'u'}; // Initializes an array named 'vowel
           className="bg-green-500 text-white px-4 py-2 rounded-md"
           onClick={unlockNextLevel}
         >
-          Take the quiz to Unlock Next Level
+          Take the quiz 
+          
         </button>
       </div>
     </div>

@@ -1,31 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function VariablesQuizCpp() {
-  const [selectedOptions, setSelectedOptions] = useState(
-    JSON.parse(localStorage.getItem("selectedOptionsCpp")) || {}
-  );
-  const [score, setScore] = useState(
-    JSON.parse(localStorage.getItem("scoreCpp")) || 0
-  );
+export default function Quiz() {
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [submitted, setSubmitted] = useState(
-    JSON.parse(localStorage.getItem("submittedCpp")) || false
-  );
+  const [submitted, setSubmitted] = useState(false);
   const [nextLevelUnlocked, setNextLevelUnlocked] = useState(false);
-  const [currentLevel, setCurrentLevel] = useState(0);
+  const [currentSet, setCurrentSet] = useState(1);
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes timer
+  const [timeExpired, setTimeExpired] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
   const courseName = "Cpp";
   const courseTopic = "variablescpp";
 
-  const [currentSet, setCurrentSet] = useState(
-    JSON.parse(localStorage.getItem("currentSetCpp")) || 1
-  );
-  const [timeLeft, setTimeLeft] = useState(
-    JSON.parse(localStorage.getItem("timeLeftCpp")) || 120
-  ); // 2 minutes timer
+  const [currentLevel, setCurrentLevel] = useState(0);
+
+ 
   const fetchUserLevel = async () => {
     try {
       const url = `/api/course/user-level/${encodeURIComponent(courseName)}/${
@@ -55,10 +48,9 @@ export default function VariablesQuizCpp() {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer);
-          handleSubmit(true); // Auto-submit when timer reaches zero
+          handleTimeExpired(); // Handle timer expiration
           return 0;
         }
-        localStorage.setItem("timeLeftCpp", JSON.stringify(prevTime - 1));
         return prevTime - 1;
       });
     }, 1000);
@@ -66,6 +58,12 @@ export default function VariablesQuizCpp() {
     return () => clearInterval(timer);
   }, [submitted]);
 
+  useEffect(() => {
+    if (!initialized) {
+      resetQuiz();
+      setInitialized(true);
+    }
+  }, [initialized]);
   const questions = [
     {
       id: 1,
@@ -302,8 +300,8 @@ export default function VariablesQuizCpp() {
   ];
 
   const handleSubmit = async (autoSubmit = false) => {
-    if (submitted) return;
     const currentQuestions = questionSets[currentSet - 1];
+
     if (!autoSubmit) {
       const unansweredQuestions = currentQuestions.filter(
         (q) => !selectedOptions[q.id]
@@ -313,21 +311,18 @@ export default function VariablesQuizCpp() {
         return;
       }
     }
-    setShowFeedback(true);
 
     let totalScore = 0;
 
     currentQuestions.forEach((q) => {
-      if (selectedOptions[q.id] === q.correctOption) {
+      if (selectedOptions[q.id] && selectedOptions[q.id] === q.correctOption) {
         totalScore += 1;
       }
     });
 
     setScore(totalScore);
-    localStorage.setItem("scoreCpp", JSON.stringify(totalScore));
-
     setSubmitted(true);
-    localStorage.setItem("submittedCpp", JSON.stringify(true));
+    setShowFeedback(true);
 
     if (totalScore > 3) {
       setNextLevelUnlocked(true);
@@ -339,6 +334,8 @@ export default function VariablesQuizCpp() {
     if (currentLevel < 2) {
       await unlockNextLevel();
     } else {
+     
+       
       navigateToNextPage();
     }
   };
@@ -359,6 +356,14 @@ export default function VariablesQuizCpp() {
 
       const data = await response.json();
       if (data.success) {
+        setSubmitted(false);
+        setShowFeedback(false);
+         setScore(0);
+         setSelectedOptions({});
+         
+         setTimeLeft(120);
+
+       
         window.location.href = "/arraycpp";
         alert("You have successfully moved to next level of the course!");
       } else {
@@ -369,6 +374,7 @@ export default function VariablesQuizCpp() {
     }
   };
 
+ 
   const updateUserLevel = async () => {
     try {
       const response = await fetch("/api/update-level", {
@@ -389,9 +395,12 @@ export default function VariablesQuizCpp() {
       console.error("Error updating user level:", error);
     }
   };
+
   const navigateToNextPage = () => {
+    setTimeLeft(120); // Reset the timer
     window.location.href = "/arraycpp";
   };
+
   const handleOptionSelect = (questionId, optionId) => {
     if (!submitted) {
       setSelectedOptions({
@@ -406,46 +415,35 @@ export default function VariablesQuizCpp() {
     return option ? option.text : "";
   };
 
-  const handleRefresh = () => {
-    const currentQuestions = questionSets[currentSet - 1];
-    const unansweredQuestions = currentQuestions.filter(
-      (q) => !selectedOptions[q.id]
-    );
-    if (unansweredQuestions.length > 0) {
-      alert(
-        "You can't refresh unless you answer all the questions!",
-        "color: red; font-weight: bold;"
-      );
-      return;
-    }
-    localStorage.removeItem("selectedOptionsCpp");
-    localStorage.removeItem("scoreCpp");
-    localStorage.removeItem("submittedCpp");
-
-    window.location.reload();
+  const handleTimeExpired = () => {
+    setTimeExpired(true);
+    resetQuiz();
   };
 
-  useEffect(() => {
-    localStorage.setItem("selectedOptionsCpp", JSON.stringify(selectedOptions));
-    localStorage.setItem("scoreCpp", JSON.stringify(score));
-    localStorage.setItem("submittedCpp", JSON.stringify(submitted));
-    localStorage.setItem("currentSetCpp", JSON.stringify(currentSet));
-    localStorage.setItem("timeLeftCpp", JSON.stringify(timeLeft));
-  }, [selectedOptions, score, submitted, currentSet, timeLeft]);
+  const resetQuiz = () => {
+    setSelectedOptions({});
+    setScore(0);
+    setSubmitted(false);
+    setShowFeedback(false);
+    setNextLevelUnlocked(false);
+    setCurrentSet((currentSet % 4) + 1); // Alternate between sets
+    setTimeLeft(120); // Reset the timer
+    setTimeExpired(false);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-100 to-white-500 min-h-screen ">
-      <h1 className="text-3xl font-bold mb-8 text-sky-800">
-        Quiz on Variables
-      </h1>
-      <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
-        <div className="text-red-500 text-lg font-semibold">
-          Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-100 to-white-500 min-h-screen">
+      <h1 className="text-3xl font-bold mb-8 text-sky-800">Quiz on variables</h1>
+      {!submitted && !timeExpired && (
+        <div className="fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md border border-gray-300">
+          <div className="text-red-500 text-lg font-semibold">
+            Time left: {`${Math.floor(timeLeft / 60)}:${timeLeft % 60}`}
+          </div>
         </div>
-      </div>
-      {!submitted && (
+      )}
+      {!submitted && !timeExpired && (
         <p className="font-semibold rounded-md keyword-box border border-gray-300 p-4 bg-gray-300 mx-9">
-          There are 5 questions on VARIABLES. You{" "}
+          There are 5 questions on variables. You{" "}
           <span className="underline">
             must answer all the questions in a set before submitting.
           </span>
@@ -456,7 +454,20 @@ export default function VariablesQuizCpp() {
           </span>
         </p>
       )}
-      {!submitted ? (
+      {timeExpired && (
+        <div className="flex flex-col items-center justify-center h-full">
+          <p className="text-red-500 font-semibold mb-4">
+            Time's up! Please take the quiz again.
+          </p>
+          <button
+            onClick={resetQuiz}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Start Again
+          </button>
+        </div>
+      )}
+      {!submitted && !timeExpired ? (
         <div className="p-8 h-full ">
           <div className="h-full">
             {questionSets[currentSet - 1].map((q, index) => (
@@ -491,13 +502,6 @@ export default function VariablesQuizCpp() {
               >
                 Submit
               </button>
-
-              <button
-                onClick={handleRefresh}
-                className="bg-green-500 text-white px-4 py-2 rounded"
-              >
-                Refresh
-              </button>
             </div>
             {showFeedback && (
               <div className="mt-4">
@@ -506,7 +510,8 @@ export default function VariablesQuizCpp() {
             )}
           </div>
         </div>
-      ) : (
+      ) : null}
+      {submitted && !timeExpired && (
         <div className="mt-4 w-full h-full overflow-y-auto">
           <h3 className="text-xl font-bold mb-2">
             Answer Sheet -{" "}
@@ -545,12 +550,7 @@ export default function VariablesQuizCpp() {
 
           <button
             onClick={() => {
-              setSubmitted(false);
-              setShowFeedback(false);
-              setScore(0);
-              setSelectedOptions({});
-              setCurrentSet((currentSet % 4) + 1); // Alternate between set 1 and set 4
-              setTimeLeft(120); // Reset the timer
+              resetQuiz();
             }}
             className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
           >

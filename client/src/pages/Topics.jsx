@@ -57,7 +57,7 @@ export default function C() {
     setTopics(unlockedTopics);
   }, [currentLevel]);
 
-  const totalLevels = predefinedTopics.length;
+  const totalLevels = predefinedTopics.length+1;
   const unlockedLevels = currentLevel + 1; // Assuming level starts at 0
   const progressPercentage = Math.min(
     (unlockedLevels / totalLevels) * 100,

@@ -26,8 +26,12 @@ export default function Header() {
 
           <ul className="flex gap-4 text-sky-200">
             <li>
+              <Link to="/upload-and-compile">Self Study</Link>
+            </li>
+            <li>
               <Link to="/about">About</Link>
             </li>
+
             {currentUser && (
               <li className="relative">
                 <button

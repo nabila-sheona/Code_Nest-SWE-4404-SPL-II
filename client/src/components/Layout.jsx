@@ -3,19 +3,25 @@ import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
 import SecondaryHeader from "./SecondaryHeader";
+import Footer from "./Footer";
 
 const Layout = () => {
   const location = useLocation();
   const excludeHeaderPaths = ["/sign-in", "/sign-up"];
-  const shouldShowSecondaryHeader = excludeHeaderPaths.includes(location.pathname);
+  const shouldShowSecondaryHeader = excludeHeaderPaths.includes(
+    location.pathname
+  );
 
   console.log("Current Path:", location.pathname);
   console.log("Show Secondary Header:", shouldShowSecondaryHeader);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       {shouldShowSecondaryHeader ? <SecondaryHeader /> : <Header />}
-      <Outlet />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+      <Footer /> {/* Add the Footer component here */}
     </div>
   );
 };

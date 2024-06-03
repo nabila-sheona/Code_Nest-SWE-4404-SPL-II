@@ -1,0 +1,98 @@
+.upload {
+  display: flex;
+  justify-content: center;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  padding: 20px;
+
+  .container {
+    display: block;
+    width: 1000px;
+    padding: 50px 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    h1 {
+      width: max-content;
+      margin-bottom: 30px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .sections {
+      display: flex;
+      justify-content: center;
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        label {
+          color: #666;
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        input[type="file"] {
+          padding: 10px;
+          font-size: 15px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          transition: all 0.3s ease;
+
+          &:hover,
+          &:focus {
+            border-color: #462bdf;
+            box-shadow: 0 0 5px rgba(70, 43, 223, 0.1);
+          }
+        }
+
+        button {
+          font-size: large;
+          padding: 12.5px 30px;
+          border: 0;
+          border-radius: 100px;
+          background-color: #0699fb;
+          color: #ffffff;
+          font-weight: bold;
+          transition: all 0.5s;
+
+          &:hover {
+            background-color: #5fbefd;
+            box-shadow: 0 0 20px #6fc5ff50;
+            transform: scale(1.05);
+          }
+
+          &:active {
+            background-color: #3d94cf;
+            transition: all 0.25s;
+            box-shadow: none;
+            transform: scale(0.98);
+          }
+        }
+
+        .output {
+          margin-top: 20px;
+
+          h2 {
+            margin-bottom: 10px;
+            color: #333;
+          }
+
+          pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+          }
+        }
+      }
+    }
+  }
+}

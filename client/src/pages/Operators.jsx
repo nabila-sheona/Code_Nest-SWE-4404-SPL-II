@@ -83,6 +83,8 @@ export default function Operators() {
   };
 
   const unlockNextLevel = () => {
+    window.location.reload();
+    
     window.location.href = "/Opquiz";
   };
 

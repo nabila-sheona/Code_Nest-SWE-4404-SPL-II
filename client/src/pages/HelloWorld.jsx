@@ -155,7 +155,7 @@ export default function HelloWorld() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen ">
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen">
       <h1 className="text-5xl font-bold mb-8 text-sky-800">Hello, World!</h1>
       <div
         className="max-w-screen-lg mx-auto px-4"
@@ -211,8 +211,8 @@ int main() {
         </p>
       </div>
 
-      <div className="mt-4 ">
-        <label htmlFor="userText" className="mr-2 ">
+      <div className="mt-4">
+        <label htmlFor="userText" className="mr-2">
           Customize Message:
         </label>
         <input
@@ -241,7 +241,7 @@ int main() {
             className="bg-sky-800 text-white px-4 py-2 ml-2 rounded-md"
             onClick={undoHighlight}
           >
-            Check Last Highlight and remove
+            Check Last Highlight and Remove
           </button>
         )}
       </div>
@@ -266,6 +266,11 @@ int main() {
           </button>
         )}
       </div>
+
+      {/* Floating button */}
+      <Link to="/upload-and-compile" className="floating-button">
+        Upload & Compile
+      </Link>
     </div>
   );
 }

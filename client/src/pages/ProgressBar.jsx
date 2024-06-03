@@ -2,11 +2,11 @@ import React from "react";
 
 const ProgressBar = ({ progress }) => {
   const containerStyles = {
-    height: 35, // Increased height
-    width: "100%",
+    height: 35,
+    width: "80%",
     backgroundColor: "#e0e0de",
     borderRadius: 50,
-    margin: "20px 0",
+    margin: "20px auto", // Centered horizontally
     boxShadow: "0px 3px 3px rgba(0, 0, 0, 0.1)",
   };
 
@@ -25,9 +25,9 @@ const ProgressBar = ({ progress }) => {
 
   const labelStyles = {
     padding: 5,
-    color: "white",
+    color: "black",
     fontWeight: "bold",
-    textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+    // textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
   };
 
   return (

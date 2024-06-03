@@ -12,6 +12,7 @@ export default function ForLoop() {
   const MAX_TEXT_LENGTH = 30;
 
   const unlockNextLevel = () => {
+    window.location.reload();
     window.location.href = "/for-loopsQuiz";
   };
 

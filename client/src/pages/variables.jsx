@@ -80,7 +80,8 @@ export default function variables() {
   };
 
   const unlockNextLevel = () => {
-    window.location.href = "/Quiz";
+    window.location.reload();
+    window.location.href = "/variablesquiz";
   };
 
   return (
@@ -197,13 +198,14 @@ export default function variables() {
 
       <p className="mt-4">Highlighted Text: {highlightedText}</p>
 
-      <div className="mt-4 text-center">
-        <Link
-          to="/variablesquiz"
-          className="btn bg-green-500 text-white px-4 py-2 rounded-md"
+      <div className="mt-4">
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded-md"
+          onClick={unlockNextLevel}
         >
-          Take the quiz to Unlock Next Level
-        </Link>
+          Take the quiz 
+          
+        </button>
       </div>
     </div>
   );

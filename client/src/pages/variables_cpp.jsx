@@ -79,6 +79,7 @@ export default function VariablesCpp() {
   };
 
   const unlockNextLevel = () => {
+    window.location.reload();
     window.location.href = "/vQuiz_cpp";
   };
 
@@ -196,13 +197,13 @@ export default function VariablesCpp() {
 
       <p className="mt-4">Highlighted Text: {highlightedText}</p>
 
-      <div className="mt-4 text-center">
-        <Link
-          to="/vQuiz_cpp"
-          className="btn bg-green-500 text-white px-4 py-2 rounded-md"
+      <div className="mt-4">
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded-md"
+          onClick={unlockNextLevel}
         >
           Take the quiz to Unlock Next Level
-        </Link>
+        </button>
       </div>
     </div>
   );

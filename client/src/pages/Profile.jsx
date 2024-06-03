@@ -71,7 +71,7 @@ export default function Profile() {
     }
   };
 
-  const totalLevels = 9;
+  const totalLevels = 10;
 
   const progressPercentageCpp = isRegisteredCpp
     ? Math.min(((currentLevelCpp + 1) / totalLevels) * 100, 100)
@@ -207,7 +207,8 @@ export default function Profile() {
   };
 
   return (
-    <div className="relative flex flex-col md:flex-row bg-gradient-to-br from-sky-300 to-white-500 min-h-screen">
+    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen">
+
       <div className="absolute left-7 top-1/2 transform -translate-y-1/2  bg-gradient-to-br from-indigo-900 to-sky-400 text-white rounded-lg shadow-lg w-64">
       <h2 className="text-2xl font-semibold text-center mb-4">Progress</h2>
         

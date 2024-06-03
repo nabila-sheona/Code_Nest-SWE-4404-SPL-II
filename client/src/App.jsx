@@ -31,7 +31,15 @@ import While from "./pages/While";
 import WhileQuiz from "./pages/WhileQuiz";
 import Functions from "./pages/Functions";
 import FunctionQuiz from "./pages/FunctionQuiz";
+import H_worldcpp from "./pages/h_worldcpp";
+import Variables_cpp from "./pages/variables_cpp";
+import VQuiz_cpp from "./pages/vQuiz_cpp";
+import Arraycpp from "./pages/arraycpp";
+import ArrayquizCpp from "./pages/ArrayquizCpp";
+import Operatorscpp from "./pages/operatorscpp";
+import UploadAndCompile from "./pages/UploadAndCompile"; // Import the UploadAndCompile component
 
+import TheEnd from "./pages/TheEnd"; 
 export default function App() {
   return (
     <BrowserRouter>
@@ -65,7 +73,14 @@ export default function App() {
           <Route path="/while-loopsQuiz" element={<WhileQuiz />} />
           <Route path="/functions" element={<Functions />} />
           <Route path="/functionsQuiz" element={<FunctionQuiz />} />
-
+          <Route path="/h_worldcpp" element={<H_worldcpp />} />
+          <Route path="/variables_cpp" element={<Variables_cpp />} />
+          <Route path="/vQuiz_cpp" element={<VQuiz_cpp />} />
+          <Route path="/arraycpp" element={<Arraycpp />} />
+          <Route path="/ArrayquizCpp" element={<ArrayquizCpp />} />
+          <Route path="/operatorscpp" element={<Operatorscpp />} />
+          <Route path="/upload-and-compile" element={<UploadAndCompile />} /> {/* Add the new route here */}
+          <Route path="/theend" element={<TheEnd />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
