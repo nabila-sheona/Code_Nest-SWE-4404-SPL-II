@@ -1,0 +1,43 @@
+{
+  "name": "mern_auth",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon api/index.js",
+    "start": "node api/index.js",
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
+    "@prisma/client": "^5.14.0",
+    "axios": "^1.7.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "child_process": "^1.0.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "esprima": "^4.0.1",
+    "express": "^4.19.2",
+    "express-fileupload": "^1.5.0",
+    "fs": "^0.0.1-security",
+    "html2canvas": "^1.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.1",
+    "mongoose": "^8.4.1",
+    "nodemon": "^3.1.0",
+    "openai": "^4.47.3",
+    "path": "^0.12.7",
+    "react-highlight-selection": "^1.0.2",
+    "react-parallax-tilt": "^1.7.223",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.14.0"
+  }
+}
