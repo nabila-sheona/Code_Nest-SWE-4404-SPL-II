@@ -209,7 +209,7 @@ export default function Profile() {
   return (
     <div className="flex flex-col items-center justify-center bg-gradient-to-br from-sky-300 to-white-500 min-h-screen">
 
-      <div className="absolute left-7 top-1/2 transform -translate-y-1/2  bg-gradient-to-br from-indigo-900 to-sky-400 text-white rounded-lg shadow-lg w-64">
+      <div className="absolute left-7 top-2/3 transform -translate-y-1/2  bg-gradient-to-br from-indigo-900 to-sky-400 text-white rounded-lg shadow-lg w-64">
       <h2 className="text-2xl font-semibold text-center mb-4">Progress</h2>
         
         <div className="mb-4">
@@ -226,7 +226,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="w-full md:w-2/3 p-2.5 ml-auto">
+      <div className="w-full md:w-3/4 p-2.5 ml-auto">
         <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
