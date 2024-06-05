@@ -25,28 +25,36 @@ Users can personalize their learning experience by creating a profile, which sto
 
 ## 📊 Course Features
 
-1.  **•**User Authentication and Profile **•**
-Secure Login and Registration: Secure user authentication system for login and registration.
-User Profiles: Customizable user profiles to track progress and manage personal information.
-2.  **•**Course Catalog **•**
-Extensive Library: Browse an extensive catalog of programming courses ranging from beginner to advanced levels.
-Course Details: View detailed descriptions and prerequisites for each course.
-3.  **•**Learning Materials and Resources **•**
-Access Materials: Downloadable resources, lecture notes, and reference materials.
-Video Lectures: Stream high-quality video lectures directly within the platform.
-4.  **•**Unlock Lectures **•**
-Progress-Based Unlocking: Unlock new lectures based on course progress.
-Interactive Learning Paths: Follow structured learning paths to guide your educational journey.
-5.  **•**Problem Solving and Quiz **•**
-Interactive Quizzes: Test your knowledge with topic-specific quizzes.
-Problem Solving Exercises: Engage with practical programming problems and coding exercises.
-6.  **•**Chatbot and Timer **•**
-Interactive Chatbot: Get instant help and answers to your queries via an AI-powered chatbot.
-Study Timer: Manage study time effectively with a built-in timer for focused learning sessions.
-7. **•**Compiler**•**
-Integrated Development Environment (IDE): Code directly in the browser with an embedded compiler for real-time coding and immediate feedback.
-8. **•**Progress Bar**•**
-Visual Progress Indicators: Track your learning progress with visual bars
+1. **User Authentication and Profile**
+   - **Secure Login and Registration:** Secure user authentication system for login and registration.
+   - **User Profiles:** Customizable user profiles to track progress and manage personal information.
+
+2. **Course Catalog**
+   - **Extensive Library:** Browse an extensive catalog of programming courses ranging from beginner to advanced levels.
+   - **Course Details:** View detailed descriptions and prerequisites for each course.
+
+3. **Learning Materials and Resources**
+   - **Access Materials:** Downloadable resources, lecture notes, and reference materials.
+   - **Video Lectures:** Stream high-quality video lectures directly within the platform.
+
+4. **Unlock Lectures**
+   - **Progress-Based Unlocking:** Unlock new lectures based on course progress.
+   - **Interactive Learning Paths:** Follow structured learning paths to guide your educational journey.
+
+5. **Problem Solving and Quiz**
+   - **Interactive Quizzes:** Test your knowledge with topic-specific quizzes.
+   - **Problem Solving Exercises:** Engage with practical programming problems and coding exercises.
+
+6. **Chatbot and Timer**
+   - **Interactive Chatbot:** Get instant help and answers to your queries via an AI-powered chatbot.
+   - **Study Timer:** Manage study time effectively with a built-in timer for focused learning sessions.
+
+7. **Compiler**
+   - **Integrated C code compiler:** Code directly in the browser with an embedded compiler for real-time coding and immediate feedback.
+
+8. **Progress Bar**
+   - **Visual Progress Indicators:** Track your learning progress with visual bars.
+
 
 
 ## 🏏 Contributors
