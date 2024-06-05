@@ -107,43 +107,7 @@ Welcome to CodeNest – a comprehensive and user-friendly online platform design
 - postcss.config.js: PostCSS configuration
 - tailwind.config.js: Tailwind CSS configuration
 - vite.config.js: Vite configuration
-
-
-
-## Getting Started
-
-### Installation
-
-1. Clone the repository:
-    bash
-    git clone https://github.com/https://github.com/nabila-sheona/Code_Nest-SWE-4404-SPL-II.git
     
-
-2. Install dependencies for the backend:
-    bash
-    cd api
-    npm install
-    
-
-3. Install dependencies for the frontend:
-    bash
-    cd client
-    npm install
-    
-
-### Running the Application
-
-1. Start the backend server:(in the root)
-    bash
-    npm install @prisma/client
-    npx prisma generate --schema=schema path
-    npm run dev
-    
-
-2. Start the frontend development server:
-    bash
-    cd client
-    npm run dev
 
 ## 🌐 User Information
 Users can personalize their learning experience by creating a profile, which stores their progress, course enrollments, and achievements. Ensure you complete your profile for a tailored experience.
@@ -187,6 +151,43 @@ Users can personalize their learning experience by creating a profile, which sto
 - [Namisa Najah Raisa](https://github.com/N4N48)
 - [Faiza Maliat](https://github.com/FaizaM07)
 - [Nabila Sheona](https://github.com/nabila-sheona)
+  
+
+## Getting Started
+
+### Installation
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/https://github.com/nabila-sheona/Code_Nest-SWE-4404-SPL-II.git
+    ```
+
+2. Install dependencies for the backend:
+    ```bash
+    cd api
+    npm install
+    ```
+
+3. Install dependencies for the frontend:
+    ```bash
+    cd client
+    npm install
+    ```
+
+### Running the Application
+
+1. Start the backend server:(in the root)
+    ```bash
+    npm install @prisma/client
+    npx prisma generate --schema=schema path
+    npm run dev
+    ```
+
+2. Start the frontend development server:
+    ```bash
+    cd client
+    npm run dev
+
 
 ## 🌟 Motivation for the Project
 CodeNest was created out of a passion for programming and a desire to provide an engaging and effective learning platform for enthusiasts of all levels. Our goal is to make learning programming accessible, enjoyable, and rewarding.
