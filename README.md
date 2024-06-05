@@ -153,6 +153,7 @@ Users can personalize their learning experience by creating a profile, which sto
 - [Nabila Sheona](https://github.com/nabila-sheona)
   
 
+
 ## Getting Started
 
 ### Installation
@@ -176,17 +177,26 @@ Users can personalize their learning experience by creating a profile, which sto
 
 ### Running the Application
 
-1. Start the backend server:(in the root)
+1. At start:
+    ```bash
+   npx create-react-app compile-c
+   cd compile-c
+   npm start
+    ```
+2. Start the backend server:(in the root)
     ```bash
     npm install @prisma/client
     npx prisma generate --schema=schema path
     npm run dev
+    npm install express mongoose dotenv cors cookie-parser express-      fileupload uuid fs path child_process
     ```
 
-2. Start the frontend development server:
+3. Start the frontend development server:
     ```bash
     cd client
     npm run dev
+    ```
+
 
 
 ## 🌟 Motivation for the Project
