@@ -148,7 +148,7 @@ Users can personalize their learning experience by creating a profile, which sto
 
 ## 🏏 Contributors
 
-- [Namisa Najah Raisa](https://github.com/N4N48)
+- [Namisa Najah Raisa](https://github.com/N4M154)
 - [Faiza Maliat](https://github.com/FaizaM07)
 - [Nabila Sheona](https://github.com/nabila-sheona)
   
