@@ -188,7 +188,7 @@ Users can personalize their learning experience by creating a profile, which sto
     npm install @prisma/client
     npx prisma generate --schema=schema path
     npm run dev
-    npm install express mongoose dotenv cors cookie-parser express-      fileupload uuid fs path child_process
+    npm install express mongoose dotenv cors cookie-parser express-fileupload uuid fs path child_process
     ```
 
 3. Start the frontend development server:
